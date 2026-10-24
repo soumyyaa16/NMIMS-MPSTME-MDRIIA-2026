@@ -1,6 +1,7 @@
 """Run the tremor experiment on every planned scenario.
     python src/run_scenarios.py [--n 5] [--ids enhancing_superior,edema_anterior]
-Needs analytics/scenarios.json from plan_scenarios.py.  Writes analytics/scenario_trials.csv."""
+Needs scenarios.json from plan_scenarios.py.  Writes scenario_trials.csv next to it.
+    python src/run_scenarios.py --case c160 --n 3        (analytics/cases/c160/...)"""
 import argparse
 import json
 import time
@@ -14,13 +15,15 @@ ap = argparse.ArgumentParser()
 ap.add_argument("--n", type=int, default=5, help="seeds per condition per scenario")
 ap.add_argument("--ids", default="", help="comma list of scenario ids (default: all)")
 ap.add_argument("--seed0", type=int, default=2000)
+ap.add_argument("--case", default=None, help="case id (default: original patient)")
 a = ap.parse_args()
 
-scns = json.loads((sc.ROOT / "analytics" / "scenarios.json").read_text())
+adir = sc.ROOT / "analytics" if a.case is None else sc.ROOT / "analytics" / "cases" / a.case
+scns = json.loads((adir / "scenarios.json").read_text())
 if a.ids:
     keep = a.ids.split(",")
     scns = [s for s in scns if s["id"] in keep]
-model = sc.load_model()
+model = sc.load_model(a.case)
 rows, t0 = [], time.time()
 for s in scns:
     plan = sc.plan_from_scenario(s)
@@ -30,12 +33,12 @@ for s in scns:
         amp, ks = float(rng.uniform(50, 250)), float(rng.uniform(0.7, 1.3))
         for c in ("NT", "BASE", "PROP"):
             r = sc.run_trial(model, c, seed, amp, ks, plan=plan)["summary"]
-            r.update(scenario=s["id"], planner_status=s["status"], path_len_mm=s["path_len_m"] * 1e3,
+            r.update(case=a.case or "orig", scenario=s["id"], planner_status=s["status"], path_len_mm=s["path_len_m"] * 1e3,
                      plan_min_w=s["min_w"])
             rows.append(r)
     print(f"{s['id']:22s} done  elapsed {time.time() - t0:.0f}s", flush=True)
 df = pd.DataFrame(rows)
-df.to_csv(sc.ROOT / "analytics" / "scenario_trials.csv", index=False)
+df.to_csv(adir / "scenario_trials.csv", index=False)
 pd.set_option("display.width", 220)
 g = df.pivot_table(index="scenario", columns="cond",
                    values=["hold_rms_mm", "hold_max_mm", "tremor_rejection_dB"], aggfunc="mean").round(3)

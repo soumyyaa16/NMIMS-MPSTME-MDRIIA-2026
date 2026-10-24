@@ -1,0 +1,380 @@
+[
+  {
+    "id": "enhancing_superior",
+    "case": "c040",
+    "lesion": "enhancing",
+    "zone": "superior",
+    "status": "REACHABLE",
+    "target_m": [
+      -0.0020000000000000018,
+      0.07,
+      -0.032
+    ],
+    "approach_dir": [
+      -0.20171099935899348,
+      0.7057232542764089,
+      0.6791666666666667
+    ],
+    "path_len_m": 0.037418056582023726,
+    "min_w": 0.06802875787648933,
+    "clearance_mm": 101.58802596546074,
+    "limit_margin_rad": 0.6836049689490546
+  },
+  {
+    "id": "enhancing_anterior",
+    "case": "c040",
+    "lesion": "enhancing",
+    "zone": "anterior",
+    "status": "REACHABLE",
+    "target_m": [
+      -0.0020000000000000018,
+      0.07,
+      -0.032
+    ],
+    "approach_dir": [
+      -0.5096727801763619,
+      0.7307299747760364,
+      -0.4541666666666665
+    ],
+    "path_len_m": 0.006958203412049592,
+    "min_w": 0.10206099308202736,
+    "clearance_mm": 130.21235478710597,
+    "limit_margin_rad": 0.3677683509973906
+  },
+  {
+    "id": "enhancing_posterior",
+    "case": "c040",
+    "lesion": "enhancing",
+    "zone": "posterior",
+    "status": "REACHABLE",
+    "target_m": [
+      -0.0020000000000000018,
+      0.07,
+      -0.032
+    ],
+    "approach_dir": [
+      0.06968293864913078,
+      -0.8294839321028329,
+      -0.5541666666666666
+    ],
+    "path_len_m": 0.00888169231106097,
+    "min_w": 0.08553839224411458,
+    "clearance_mm": 43.14745406963419,
+    "limit_margin_rad": 0.4007498607689335
+  },
+  {
+    "id": "enhancing_left",
+    "case": "c040",
+    "lesion": "enhancing",
+    "zone": "left",
+    "status": "REACHABLE",
+    "target_m": [
+      -0.0020000000000000018,
+      0.07,
+      -0.032
+    ],
+    "approach_dir": [
+      -0.6494495695230925,
+      0.7073056120719615,
+      -0.27916666666666656
+    ],
+    "path_len_m": 0.008199998365245565,
+    "min_w": 0.07898890554136845,
+    "clearance_mm": 122.03103426447085,
+    "limit_margin_rad": 0.4467379774827662
+  },
+  {
+    "id": "enhancing_right",
+    "case": "c040",
+    "lesion": "enhancing",
+    "zone": "right",
+    "status": "REACHABLE",
+    "target_m": [
+      -0.0020000000000000018,
+      0.07,
+      -0.032
+    ],
+    "approach_dir": [
+      0.6706504071469257,
+      0.25699027922449713,
+      0.6958333333333333
+    ],
+    "path_len_m": 0.054515599354312855,
+    "min_w": 0.054514412496425024,
+    "clearance_mm": 84.89637743729251,
+    "limit_margin_rad": 0.9052329176937192
+  },
+  {
+    "id": "enhancing_inferior",
+    "case": "c040",
+    "lesion": "enhancing",
+    "zone": "inferior",
+    "status": "REACHABLE",
+    "target_m": [
+      -0.0020000000000000018,
+      0.07,
+      -0.032
+    ],
+    "approach_dir": [
+      -0.4198609922311843,
+      -0.592503584126413,
+      -0.6875
+    ],
+    "path_len_m": 0.007198116591015455,
+    "min_w": 0.08138587206331864,
+    "clearance_mm": 62.79240946103477,
+    "limit_margin_rad": 0.39611308467102213
+  },
+  {
+    "id": "necrotic_superior",
+    "case": "c040",
+    "lesion": "necrotic",
+    "zone": "superior",
+    "status": "REACHABLE",
+    "target_m": [
+      -0.009000000000000001,
+      0.057,
+      -0.017
+    ],
+    "approach_dir": [
+      -0.20171099935899348,
+      0.7057232542764089,
+      0.6791666666666667
+    ],
+    "path_len_m": 0.045449848933208796,
+    "min_w": 0.06351476481820614,
+    "clearance_mm": 103.10619944481394,
+    "limit_margin_rad": 0.6370875044093669
+  },
+  {
+    "id": "necrotic_anterior",
+    "case": "c040",
+    "lesion": "necrotic",
+    "zone": "anterior",
+    "status": "REACHABLE",
+    "target_m": [
+      -0.009000000000000001,
+      0.057,
+      -0.017
+    ],
+    "approach_dir": [
+      -0.5096727801763619,
+      0.7307299747760364,
+      -0.4541666666666665
+    ],
+    "path_len_m": 0.02193025856435413,
+    "min_w": 0.09589458693296729,
+    "clearance_mm": 115.58976766398312,
+    "limit_margin_rad": 0.3893512922366018
+  },
+  {
+    "id": "necrotic_posterior",
+    "case": "c040",
+    "lesion": "necrotic",
+    "zone": "posterior",
+    "status": "REACHABLE",
+    "target_m": [
+      -0.009000000000000001,
+      0.057,
+      -0.017
+    ],
+    "approach_dir": [
+      0.06968293864913078,
+      -0.8294839321028329,
+      -0.5541666666666666
+    ],
+    "path_len_m": 0.029886786560322808,
+    "min_w": 0.08065488861143524,
+    "clearance_mm": 36.63935080298738,
+    "limit_margin_rad": 0.3866738764571005
+  },
+  {
+    "id": "necrotic_left",
+    "case": "c040",
+    "lesion": "necrotic",
+    "zone": "left",
+    "status": "REACHABLE",
+    "target_m": [
+      -0.009000000000000001,
+      0.057,
+      -0.017
+    ],
+    "approach_dir": [
+      -0.6494495695230925,
+      0.7073056120719615,
+      -0.27916666666666656
+    ],
+    "path_len_m": 0.026806005803264015,
+    "min_w": 0.07191413093544051,
+    "clearance_mm": 111.49897085392017,
+    "limit_margin_rad": 0.4214043022548448
+  },
+  {
+    "id": "necrotic_right",
+    "case": "c040",
+    "lesion": "necrotic",
+    "zone": "right",
+    "status": "REACHABLE",
+    "target_m": [
+      -0.009000000000000001,
+      0.057,
+      -0.017
+    ],
+    "approach_dir": [
+      0.6706504071469257,
+      0.25699027922449713,
+      0.6958333333333333
+    ],
+    "path_len_m": 0.05778588718548003,
+    "min_w": 0.057654345537583716,
+    "clearance_mm": 83.10403830910609,
+    "limit_margin_rad": 0.9469430727646856
+  },
+  {
+    "id": "necrotic_inferior",
+    "case": "c040",
+    "lesion": "necrotic",
+    "zone": "inferior",
+    "status": "FLAGGED",
+    "target_m": [
+      -0.009000000000000001,
+      0.057,
+      -0.017
+    ],
+    "approach_dir": [
+      -0.19909152938218733,
+      0.5600701162805276,
+      -0.8041666666666668
+    ],
+    "path_len_m": 0.019483554704680904,
+    "min_w": 0.054673335286745714,
+    "clearance_mm": 69.89604410335988,
+    "limit_margin_rad": 0.12961400084400743
+  },
+  {
+    "id": "edema_superior",
+    "case": "c040",
+    "lesion": "edema",
+    "zone": "superior",
+    "status": "REACHABLE",
+    "target_m": [
+      -0.016,
+      0.054,
+      0.013999999999999999
+    ],
+    "approach_dir": [
+      -0.3916670305113919,
+      0.5388223975479094,
+      0.7458333333333333
+    ],
+    "path_len_m": 0.023069131335781975,
+    "min_w": 0.032349335243903835,
+    "clearance_mm": 125.39753270568637,
+    "limit_margin_rad": 0.3623469085271056
+  },
+  {
+    "id": "edema_anterior",
+    "case": "c040",
+    "lesion": "edema",
+    "zone": "anterior",
+    "status": "REACHABLE",
+    "target_m": [
+      -0.016,
+      0.054,
+      0.013999999999999999
+    ],
+    "approach_dir": [
+      -0.3898903258138229,
+      0.7225889837192002,
+      0.5708333333333333
+    ],
+    "path_len_m": 0.02294824626809923,
+    "min_w": 0.04211485738034967,
+    "clearance_mm": 122.71753172178873,
+    "limit_margin_rad": 0.4900106177579877
+  },
+  {
+    "id": "edema_posterior",
+    "case": "c040",
+    "lesion": "edema",
+    "zone": "posterior",
+    "status": "REACHABLE",
+    "target_m": [
+      -0.016,
+      0.054,
+      0.013999999999999999
+    ],
+    "approach_dir": [
+      -0.324488569822415,
+      -0.6496544605054319,
+      0.6875
+    ],
+    "path_len_m": 0.059007118423256656,
+    "min_w": 0.033394097243478554,
+    "clearance_mm": 64.47455687930359,
+    "limit_margin_rad": 0.3183283146736535
+  },
+  {
+    "id": "edema_left",
+    "case": "c040",
+    "lesion": "edema",
+    "zone": "left",
+    "status": "REACHABLE",
+    "target_m": [
+      -0.016,
+      0.054,
+      0.013999999999999999
+    ],
+    "approach_dir": [
+      -0.701531505105009,
+      0.689748398258855,
+      0.1791666666666668
+    ],
+    "path_len_m": 0.02830048484779282,
+    "min_w": 0.032476730640976934,
+    "clearance_mm": 115.49470464327013,
+    "limit_margin_rad": 0.27345263346012016
+  },
+  {
+    "id": "edema_right",
+    "case": "c040",
+    "lesion": "edema",
+    "zone": "right",
+    "status": "REACHABLE",
+    "target_m": [
+      -0.016,
+      0.054,
+      0.013999999999999999
+    ],
+    "approach_dir": [
+      0.6758457785354911,
+      0.445057562159948,
+      0.5875
+    ],
+    "path_len_m": 0.038685480465125634,
+    "min_w": 0.05078184083422978,
+    "clearance_mm": 104.29832156334825,
+    "limit_margin_rad": 0.9025543270333615
+  },
+  {
+    "id": "edema_inferior",
+    "case": "c040",
+    "lesion": "edema",
+    "zone": "inferior",
+    "status": "FLAGGED",
+    "target_m": [
+      -0.016,
+      0.054,
+      0.013999999999999999
+    ],
+    "approach_dir": [
+      -0.19909152938218733,
+      0.5600701162805276,
+      -0.8041666666666668
+    ],
+    "path_len_m": 0.04609859124640909,
+    "min_w": 0.055878018466576355,
+    "clearance_mm": 98.92300944165193,
+    "limit_margin_rad": 0.1735301082542453
+  }
+]

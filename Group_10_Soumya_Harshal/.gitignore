@@ -1,3 +1,5 @@
 analytics/telemetry/
 analytics_test/
 __pycache__/
+/cases/
+models/_case_*.xml

@@ -1,8 +1,10 @@
 """Scenario planner: computes, for every lesion target x approach zone, whether the plan is
 REACHABLE / FLAGGED / BLOCKED.  Nothing is hard-coded: outcomes come from ray-casts on the brain mesh,
 inverse kinematics, manipulability along the path and MuJoCo geometry distance.
-    python src/plan_scenarios.py            ->  analytics/scenarios.json, analytics/scenario_outcomes.csv
+    python src/plan_scenarios.py                 ->  analytics/scenarios.json, analytics/scenario_outcomes.csv
+    python src/plan_scenarios.py --case c160     ->  analytics/cases/c160/scenarios.json, ...
 Lesion targets are 'lesion from supplied annotation' (BraTS labels), not a diagnosis."""
+import argparse
 import json
 from collections import Counter
 
@@ -40,7 +42,7 @@ def lesion_targets(pitch=0.001):
     Enhancing tumour is a shell around the necrotic core and the edema surrounds both, so the region is the
     filled mesh minus the filled inner meshes (a plain fill would close the cavity)."""
     fills = {n: trimesh.load(MESH_DIR / f"{n}.obj", process=False).voxelized(pitch).fill()
-             for n in ("tumor", "necrotic", "edema")}
+             for n in ("tumor", "necrotic", "edema") if (MESH_DIR / f"{n}.obj").exists()}
     allp = np.vstack([v.points for v in fills.values()])
     lo = allp.min(0) - pitch
     shape = np.ceil((allp.max(0) + pitch - lo) / pitch).astype(int) + 1
@@ -49,10 +51,13 @@ def lesion_targets(pitch=0.001):
         a = np.zeros(shape, bool)
         a[tuple(np.rint((v.points - lo) / pitch).astype(int).T)] = True
         M[n] = a
-    regions = {"enhancing": M["tumor"] & ~M["necrotic"], "necrotic": M["necrotic"],
-               "edema": M["edema"] & ~M["tumor"] & ~M["necrotic"]}
+    none = np.zeros(shape, bool)
+    T_, N_, E_ = M.get("tumor", none), M.get("necrotic", none), M.get("edema", none)
+    regions = {"enhancing": T_ & ~N_, "necrotic": N_, "edema": E_ & ~T_ & ~N_}
     out = {}
     for name, mask in regions.items():
+        if mask.sum() < 50:
+            continue
         dist = ndi.distance_transform_edt(mask) * pitch
         idx = np.unravel_index(np.argmax(dist), dist.shape)
         out[name] = (lo + np.array(idx) * pitch, float(dist.max()), float(mask.sum() * pitch**3 * 1e6))
@@ -136,8 +141,12 @@ class Checker:
         return dict(status="FLAGGED" if flags else "REACHABLE", reason="+".join(flags) or "ok", **res)
 
 
-def main():
-    model = sc.load_model()
+def main(case=None):
+    global MESH_DIR
+    MESH_DIR = sc.case_meshdir(case)
+    out_dir = sc.ROOT / "analytics" if case is None else sc.ROOT / "analytics" / "cases" / case
+    out_dir.mkdir(parents=True, exist_ok=True)
+    model = sc.load_model(case)
     chk = Checker(model)
     brain = trimesh.load(MESH_DIR / "brain.obj", process=False)
     meta = json.loads((MESH_DIR / "export_meta.json").read_text())
@@ -145,6 +154,9 @@ def main():
     rows, scenarios = [], []
     targets = lesion_targets()
     for lname in LESIONS:
+        if lname not in targets:
+            print(f"\n{lname}: absent in this case - skipped")
+            continue
         target, rad, vol_cm3 = targets[lname]
         inside_brain = bool(brain.contains(target[None])[0])
         extra = {}
@@ -173,7 +185,7 @@ def main():
                 reasons = Counter()
             if best["status"] != "BLOCKED" and rad < MIN_LESION_R:
                 best["status"], best["reason"] = "FLAGGED", best["reason"] + "+small_lesion"
-            row = dict(lesion=lname, zone=zone, status=best["status"], reason=best["reason"],
+            row = dict(case=case or "orig", lesion=lname, zone=zone, status=best["status"], reason=best["reason"],
                        n_candidates=len(cand), n_too_long=n_far, inscribed_radius_mm=rad * 1e3,
                        pct_candidates_reachable=100.0 * np.mean([e["status"] == "REACHABLE" for e in evals]) if evals else 0.0,
                        pct_candidates_blocked=100.0 * np.mean([e["status"] == "BLOCKED" for e in evals]) if evals else 100.0,
@@ -187,16 +199,18 @@ def main():
                   f"path {row['path_len_mm']:.0f} mm  w {row['min_w']:.3f}  clr {row['clearance_mm']:.0f} mm  "
                   f"ok {row['pct_candidates_reachable']:.0f}%  lim {row['limit_margin_rad']:.2f} rad", flush=True)
             if best["status"] != "BLOCKED":
-                scenarios.append(dict(id=f"{lname}_{zone}", lesion=lname, zone=zone, status=best["status"],
+                scenarios.append(dict(id=f"{lname}_{zone}", case=case, lesion=lname, zone=zone, status=best["status"],
                                       target_m=target.tolist(), approach_dir=best["dir"],
                                       path_len_m=best["path_len_m"], min_w=best["min_w"],
                                       clearance_mm=best["clearance_mm"], limit_margin_rad=best["limit_margin_rad"]))
-    pd.DataFrame(rows).to_csv(sc.ROOT / "analytics" / "scenario_outcomes.csv", index=False)
-    (sc.ROOT / "analytics" / "scenarios.json").write_text(json.dumps(scenarios, indent=2))
+    pd.DataFrame(rows).to_csv(out_dir / "scenario_outcomes.csv", index=False)
+    (out_dir / "scenarios.json").write_text(json.dumps(scenarios, indent=2))
     df = pd.DataFrame(rows)
     print("\n", df.pivot(index="lesion", columns="zone", values="status").to_string())
-    print("\nsaved analytics/scenario_outcomes.csv, analytics/scenarios.json")
+    print(f"\nsaved {out_dir}/scenario_outcomes.csv and scenarios.json")
 
 
 if __name__ == "__main__":
-    main()
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--case", default=None, help="case id from src/import_case.py, e.g. c160 (default: original patient)")
+    main(ap.parse_args().case)

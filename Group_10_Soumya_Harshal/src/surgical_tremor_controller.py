@@ -71,8 +71,32 @@ CONDITIONS = {
 
 
 # ---------------------------------------------------------------- helpers
-def load_model():
-    return mujoco.MjModel.from_xml_path(str(MODEL_PATH))
+CASES_DIR = ROOT / "cases"
+
+
+def case_meshdir(case=None):
+    """Mesh folder of a case (None = the original patient in meshes_v2)."""
+    return ROOT / "meshes_v2" if case is None else CASES_DIR / case / "meshes"
+
+
+def load_model(case=None):
+    """Load the scene.  With case='c160' the lesion/brain meshes and the target marker come from cases/c160."""
+    if case is None:
+        return mujoco.MjModel.from_xml_path(str(MODEL_PATH))
+    import re
+    meshdir = case_meshdir(case).resolve()
+    meta = json.loads((meshdir / "export_meta.json").read_text())
+    xml = MODEL_PATH.read_text()
+    assert 'meshdir="../meshes_v2"' in xml, "scene XML has an unexpected meshdir"
+    xml = xml.replace('meshdir="../meshes_v2"', f'meshdir="{meshdir.as_posix()}"')
+    tx, ty, tz = meta["target_m"]
+    xml = re.sub(r'(<site name="target_site" pos=")[^"]*(")', rf"\g<1>{tx:.7f} {ty:.7f} {tz:.7f}\g<2>", xml)
+    for name in ("tumor", "necrotic", "edema"):          # a label may be absent in a case
+        if not (meshdir / f"{name}.obj").exists():
+            xml = "\n".join(l for l in xml.split("\n") if f'file="{name}.obj"' not in l and f'mesh="{name}"' not in l)
+    tmp = MODEL_PATH.parent / f"_case_{case}.xml"
+    tmp.write_text(xml)
+    return mujoco.MjModel.from_xml_path(str(tmp))
 
 
 def load_plan():
