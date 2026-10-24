@@ -1,0 +1,49 @@
+{
+  "units": "metres",
+  "world_axes": "x right, y anterior, z superior (RAS)",
+  "origin": "brain mask centroid",
+  "nifti_affine": [
+    [
+      -1.0,
+      -0.0,
+      -0.0,
+      0.0
+    ],
+    [
+      -0.0,
+      -1.0,
+      -0.0,
+      239.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "nifti_axcodes": "LPS",
+  "origin_mm_in_scanner_space": [
+    -120.97544959780842,
+    109.92451345172822,
+    79.29285204790837
+  ],
+  "target_m": [
+    -0.012024550402191579,
+    0.024075486548271782,
+    -0.002292852047908369
+  ],
+  "target_depth_mm": 7.3484692283495345,
+  "tumor_centroid_m": [
+    -0.01870286759384476,
+    0.041897245736808655,
+    -0.010171010368766276
+  ],
+  "tumor_centroid_inside_enhancing": false
+}

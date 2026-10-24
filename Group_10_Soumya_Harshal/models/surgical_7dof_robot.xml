@@ -1,91 +1,46 @@
-<mujoco model="surgical_7dof_manipulator">
-  <compiler angle="radian" coordinate="local"/>
-  <option gravity="0 0 -9.81" timestep="0.001" integrator="RK4"/>
-
+<mujoco model="surgical_7dof_robot">
+  <compiler angle="radian" meshdir="../meshes_v2" autolimits="true"/>
+  <option timestep="0.001" integrator="implicitfast"/>
   <visual>
-    <headlight ambient="0.45 0.45 0.45" diffuse="0.8 0.8 0.8" specular="0.2 0.2 0.2"/>
-    <rgba fog="0.9 0.9 0.95 1"/>
+    <headlight ambient="0.35 0.35 0.38" diffuse="0.35 0.35 0.38" specular="0.1 0.1 0.1"/>
+    <rgba haze="0.05 0.06 0.09 1"/>
+    <global azimuth="145" elevation="-22" offwidth="1280" offheight="800"/>
+    <quality shadowsize="4096"/>
   </visual>
-
-  <default>
-    <joint damping="0.8" armature="0.01"/>
-    <geom friction="0.8 0.005 0.0001" solref="0.005 1" solimp="0.95 0.99 0.001"/>
-    <motor ctrlrange="-30 30" ctrllimited="true"/>
-  </default>
-
+  <asset>
+    <model name="panda" file="franka_emika_panda/panda_surgical.xml"/>
+    <mesh name="brain" file="brain.obj"/>
+    <mesh name="tumor" file="tumor.obj"/>
+    <mesh name="necrotic" file="necrotic.obj"/>
+    <mesh name="edema" file="edema.obj"/>
+    <texture type="skybox" builtin="gradient" rgb1="0.12 0.14 0.20" rgb2="0.02 0.02 0.04" width="512" height="3072"/>
+    <texture name="floortex" type="2d" builtin="checker" rgb1="0.10 0.11 0.14" rgb2="0.07 0.08 0.10" width="300" height="300"/>
+    <material name="floor" texture="floortex" texuniform="true" texrepeat="12 12" reflectance="0.12"/>
+    <material name="table" rgba="0.80 0.83 0.86 1" specular="0.3" shininess="0.4"/>
+    <material name="drape" rgba="0.10 0.38 0.40 1" specular="0.05" shininess="0.1"/>
+    <material name="clamp" rgba="0.55 0.58 0.62 1" specular="0.6" shininess="0.6" reflectance="0.15"/>
+    <material name="brain_m" rgba="0.80 0.66 0.64 0.55" specular="0.15" shininess="0.2"/>
+    <material name="edema_m" rgba="0.25 0.50 0.95 0.22"/>
+    <material name="necrotic_m" rgba="0.95 0.78 0.20 0.95"/>
+    <material name="tumor_m" rgba="0.95 0.12 0.15 0.95" specular="0.4" shininess="0.5"/>
+  </asset>
   <worldbody>
-    <!-- Operating Room Floor & Surgical Table -->
-    <geom name="floor" type="plane" size="3 3 0.1" rgba="0.85 0.88 0.90 1"/>
-    <geom name="surgical_table" type="box" size="0.45 0.90 0.38" pos="0.65 0 0.38" rgba="0.75 0.80 0.85 1"/>
-
-    <!-- Target Tissue Phantom Block -->
-    <body name="tissue_phantom" pos="0.65 0 0.78">
-      <geom name="tissue_geom" type="box" size="0.08 0.12 0.02" rgba="0.85 0.35 0.35 0.9" mass="0.4"/>
-      <site name="puncture_target" pos="0 0 0.02" size="0.002" rgba="0.1 0.8 0.1 1"/>
-    </body>
-
-    <!-- 7-DOF Redundant Surgical Robot Arm Base -->
-    <body name="robot_base" pos="0 0 0.76">
-      <geom name="base_post" type="cylinder" size="0.09 0.18" rgba="0.25 0.30 0.35 1" mass="12.0"/>
-
-      <!-- Link 1: Shoulder Yaw -->
-      <body name="link1" pos="0 0 0.20">
-        <joint name="joint_j1_yaw" type="hinge" axis="0 0 1" range="-2.8 2.8"/>
-        <geom name="link1_geom" type="cylinder" size="0.065 0.08" rgba="0.6 0.65 0.7 1" mass="3.5"/>
-
-        <!-- Link 2: Shoulder Pitch -->
-        <body name="link2" pos="0 0 0.10">
-          <joint name="joint_j2_pitch" type="hinge" axis="0 1 0" range="-1.8 1.8"/>
-          <geom name="link2_geom" type="capsule" size="0.05 0.16" pos="0 0 0.16" rgba="0.7 0.75 0.8 1" mass="3.2"/>
-
-          <!-- Link 3: Elbow Roll -->
-          <body name="link3" pos="0 0 0.32">
-            <joint name="joint_j3_roll" type="hinge" axis="0 0 1" range="-2.8 2.8"/>
-            <geom name="link3_geom" type="cylinder" size="0.045 0.06" rgba="0.6 0.65 0.7 1" mass="2.2"/>
-
-            <!-- Link 4: Elbow Pitch -->
-            <body name="link4" pos="0 0 0.08">
-              <joint name="joint_j4_pitch" type="hinge" axis="0 1 0" range="-2.0 2.0"/>
-              <geom name="link4_geom" type="capsule" size="0.04 0.14" pos="0 0 0.14" rgba="0.7 0.75 0.8 1" mass="2.0"/>
-
-              <!-- Link 5: Forearm Roll -->
-              <body name="link5" pos="0 0 0.28">
-                <joint name="joint_j5_roll" type="hinge" axis="0 0 1" range="-2.8 2.8"/>
-                <geom name="link5_geom" type="cylinder" size="0.035 0.05" rgba="0.6 0.65 0.7 1" mass="1.5"/>
-
-                <!-- Link 6: Wrist Pitch -->
-                <body name="link6" pos="0 0 0.06">
-                  <joint name="joint_j6_pitch" type="hinge" axis="0 1 0" range="-1.8 1.8"/>
-                  <geom name="link6_geom" type="capsule" size="0.03 0.05" pos="0 0 0.05" rgba="0.5 0.55 0.6 1" mass="1.0"/>
-
-                  <!-- Link 7: Wrist Roll & Surgical Needle Tool -->
-                  <body name="needle_tool" pos="0 0 0.10">
-                    <joint name="joint_j7_roll" type="hinge" axis="0 0 1" range="-3.14 3.14"/>
-                    <geom name="tool_flange" type="cylinder" size="0.025 0.03" rgba="0.3 0.3 0.3 1" mass="0.4"/>
-                    <!-- Fine Surgical Needle Shaft -->
-                    <geom name="needle_shaft" type="cylinder" size="0.0015 0.06" pos="0 0 0.06" rgba="0.9 0.9 0.9 1" mass="0.02"/>
-                    <site name="needle_tip" pos="0 0 0.12" size="0.001" rgba="1 0 0 1"/>
-                  </body>
-                </body>
-              </body>
-            </body>
-          </body>
-        </body>
-      </body>
-    </body>
+    <light name="key" pos="0.3 -0.7 0.9" dir="-0.3 0.7 -0.9" diffuse="0.9 0.88 0.82" specular="0.3 0.3 0.3" castshadow="true"/>
+    <light name="rim" pos="-0.6 0.7 0.6" dir="0.6 -0.7 -0.5" diffuse="0.35 0.45 0.65" specular="0.1 0.1 0.1" castshadow="false"/>
+    <geom name="floor" type="plane" pos="0 0 -0.62" size="3 3 0.05" material="floor" contype="0" conaffinity="0"/>
+    <geom name="table_top" type="box" pos="-0.12 0 -0.17" size="0.62 0.40 0.02" material="table" contype="0" conaffinity="0"/>
+    <geom name="table_drape" type="box" pos="-0.12 0 -0.148" size="0.60 0.38 0.002" material="drape" contype="0" conaffinity="0"/>
+    <geom name="table_leg" type="cylinder" pos="-0.12 0 -0.40" size="0.05 0.22" material="clamp" contype="0" conaffinity="0"/>
+    <geom name="clamp_post" type="cylinder" pos="0 0.02 -0.115" size="0.018 0.035" material="clamp" contype="0" conaffinity="0"/>
+    <geom name="clamp_cup" type="ellipsoid" pos="0 0.00 -0.085" size="0.055 0.075 0.020" material="clamp" contype="0" conaffinity="0"/>
+    <geom name="brain_geom" type="mesh" mesh="brain" material="brain_m" contype="0" conaffinity="0"/>
+    <geom name="edema_geom" type="mesh" mesh="edema" material="edema_m" contype="0" conaffinity="0"/>
+    <geom name="necrotic_geom" type="mesh" mesh="necrotic" material="necrotic_m" contype="0" conaffinity="0"/>
+    <geom name="tumor_geom" type="mesh" mesh="tumor" material="tumor_m" contype="0" conaffinity="0"/>
+    <site name="target_site" pos="-0.0120246 0.0240755 -0.0022929" size="0.0025" rgba="0.1 1 0.4 1"/>
+    <camera name="overview" pos="-0.55 -0.95 0.55" xyaxes="0.87 -0.49 0  0.22 0.39 0.89"/>
+    <frame name="robot_mount" pos="-0.45 0 -0.15">
+      <attach model="panda" body="link0" prefix="p_"/>
+    </frame>
   </worldbody>
-
-  <actuator>
-    <motor name="act_j1" joint="joint_j1_yaw" ctrlrange="-30 30"/>
-    <motor name="act_j2" joint="joint_j2_pitch" ctrlrange="-30 30"/>
-    <motor name="act_j3" joint="joint_j3_roll" ctrlrange="-20 20"/>
-    <motor name="act_j4" joint="joint_j4_pitch" ctrlrange="-20 20"/>
-    <motor name="act_j5" joint="joint_j5_roll" ctrlrange="-15 15"/>
-    <motor name="act_j6" joint="joint_j6_pitch" ctrlrange="-10 10"/>
-    <motor name="act_j7" joint="joint_j7_roll" ctrlrange="-10 10"/>
-  </actuator>
-
-  <sensor>
-    <touch name="needle_contact_sensor" site="needle_tip"/>
-  </sensor>
 </mujoco>
