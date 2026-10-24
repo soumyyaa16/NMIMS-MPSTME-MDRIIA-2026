@@ -84,6 +84,15 @@ def load_plan():
     return dict(target=target, entry=entry, standoff=standoff, ins=-direction)
 
 
+def plan_from_scenario(scn):
+    """Build a plan dict from one entry of analytics/scenarios.json (produced by plan_scenarios.py)."""
+    target = np.array(scn["target_m"])
+    direction = np.array(scn["approach_dir"])
+    direction = direction / np.linalg.norm(direction)
+    entry = target + direction * scn["path_len_m"]
+    return dict(target=target, entry=entry, standoff=entry + direction * STANDOFF, ins=-direction)
+
+
 def min_jerk(tau):
     tau = np.clip(tau, 0.0, 1.0)
     s = 10 * tau**3 - 15 * tau**4 + 6 * tau**5
@@ -178,9 +187,9 @@ def ik_step(J, dx6, q, q_nom, mode, use_null, w):
 
 
 # ---------------------------------------------------------------- one trial
-def run_trial(model, cond, seed, amp_um, k_scale=1.0, viewer=None, realtime=False, record=True, data=None):
+def run_trial(model, cond, seed, amp_um, k_scale=1.0, viewer=None, realtime=False, record=True, data=None, plan=None):
     tremor_on, filt, ik_mode, use_null = CONDITIONS[cond]
-    plan = load_plan()
+    plan = plan if plan is not None else load_plan()
     robot = NeedleRobot(model)
     m = model
     d = data if data is not None else mujoco.MjData(m)
