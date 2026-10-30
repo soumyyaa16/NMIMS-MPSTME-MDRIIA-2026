@@ -25,11 +25,11 @@
 
 ## 2. Student Engineering Team Matrix
 
-| Roll No | SAP ID | Student Name | Technical Role | Assigned Git Branch | Core Viva Defense Area |
+| Roll No | SAP ID | Student Name | Technical Role | Assigned Files | Core Viva Defense Area |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `E034` | `70362400032` | **Rishi Vinod Koli** | Lead Orbital Dynamics & MuJoCo Multi-Body Physics Architect | `feat/e034-lead-orbital-dynamic` | Zero-gravity multi-body spacecraft dynamics, Generalized Jacobian Matrix (GJM), and momentum transfer during contact. |
-| `E035` | `70362400029` | **Nicholas Lewis** | Impedance Contact Control & Robotic Kinematics Engineer | `feat/e035-impedance-contact-co` | Cartesian impedance force control, tumbling satellite spin matching, and post-contact detumbling damping. |
-| `E036` | `70362400014` | **Jai Maini** | CSBS Commercial Space Economics & Satellite De-Orbiting Business Analyst | `feat/e036-csbs-commercial-spac` | LEO orbital slot preservation economics, Kessler syndrome collision risk reduction, and multi-mission ADR amortization models. |
+| `E034` | `70362400032` | **Rishi Vinod Koli** | Lead Orbital Dynamics & MuJoCo Multi-Body Physics Architect | `models/space_debris_gripper.xml`<br>`src/debris_capture_controller.py` | Zero-gravity multi-body spacecraft dynamics, Generalized Jacobian Matrix (GJM), and momentum transfer during contact. |
+| `E035` | `70362400029` | **Nicholas Lewis** | Impedance Contact Control & Robotic Kinematics Engineer | `analytics/generate_paper_figures.py`<br>`analytics/run_trials.py` | Cartesian impedance force control, tumbling satellite spin matching, and post-contact detumbling damping. |
+| `E036` | `70362400014` | **Jai Maini** | CSBS Commercial Space Economics & Satellite De-Orbiting Business Analyst | `analytics/constellation_economics.py`<br>`models/space_debris_gripper.xml` | LEO orbital slot preservation economics, Kessler syndrome collision risk reduction, and multi-mission ADR amortization models. |
 
 
 ### Student Engineering Commendation & Acknowledgments
@@ -64,9 +64,9 @@ For the exhaustive literature analysis, mathematical derivations, and viva defen
 
 ## 4. Project Demonstration & Academic Showcase (LinkedIn)
 
-[![Watch Video Demonstration on LinkedIn](docs/figures/video_poster.png)](https://lnkd.in/p/d9U73k7b)
+[![Watch Video Demonstration on LinkedIn](docs/figures/video_poster.png)](https://www.linkedin.com/)
 
-* **Video Demonstration:** [Watch 60-Second Walkthrough on LinkedIn](https://lnkd.in/p/d9U73k7b) *(Click thumbnail above to open LinkedIn post)*
+* **Video Demonstration:** [Watch 60-Second Walkthrough on LinkedIn](https://www.linkedin.com/) *(Click thumbnail above to open LinkedIn post)*
 * **Student Presenters:** **Rishi Vinod Koli (E034)**, **Nicholas Lewis (E035)**, **Jai Maini (E036)**
 * **Academic Institutional Tags:** SVKM's NMIMS MPSTME | Academic Directorate | Industry 4.0 Robotics
 * **Submission Protocol:** Record a 60–90 second demonstration of your MuJoCo simulation and telemetry. Publish on LinkedIn tagging MPSTME, Dean, and Course Faculty. Insert your live post URL in `docs/TEAM_ROSTER.json` under `"linkedin_url"`, and submit a pull request to update this project dossier and the cohort dashboard.
