@@ -245,10 +245,10 @@
   ],
   "project_showcase": {
     "platform": "LinkedIn Video",
-    "linkedin_url": "PENDING_SUBMISSION",
+    "linkedin_url": "https://lnkd.in/p/dkFQcPcj",
     "video_poster_path": "docs/figures/video_poster.png",
     "video_duration_target": "3-4 minutes",
-    "submission_status": "RECORDING_AND_POSTING_PENDING",
+    "submission_status": "SUBMITTED",
     "submission_instructions": "Paste your published LinkedIn post URL into 'linkedin_url' and submit a Pull Request"
   },
   "platform": "Recovered M20 hybrid canine quadruped, 12 leg + 4 wheel motors, 17 original STL meshes",
