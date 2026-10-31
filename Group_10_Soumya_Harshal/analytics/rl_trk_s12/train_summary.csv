@@ -1,0 +1,9 @@
+method,rms_error_um_all,rms_error_um_holding
+fixed 1.5 Hz,965.05,33.74
+fixed 2.5 Hz,578.39,23.9
+fixed 4.0 Hz,362.04,25.8
+fixed 7.0 Hz,212.18,39.49
+fixed 14.0 Hz,126.65,62.45
+no filter (raw),68.79,68.3
+speed rule (no learning),228.56,32.86
+RL (PPO),53.72,36.69

@@ -1,0 +1,24 @@
+t_s,event,detail
+0.0,SESSION_START,c040/enhancing_superior seed=7 tremor=150um
+0.0,ASSISTANT_ON,default
+1.28,ADVANCE,goal depth=-55.0mm
+1.312,ADVANCE,goal depth=-50.0mm
+1.344,ADVANCE,goal depth=-45.0mm
+1.376,ADVANCE,goal depth=-40.0mm
+1.408,ADVANCE,goal depth=-35.0mm
+1.44,ADVANCE,goal depth=-30.0mm
+1.472,ADVANCE,goal depth=-25.0mm
+1.504,ADVANCE,goal depth=-20.0mm
+1.536,ADVANCE,goal depth=-15.0mm
+1.568,ADVANCE,goal depth=-10.0mm
+1.6,ADVANCE,goal depth=-5.0mm
+1.632,ADVANCE,goal depth=-0.0mm
+1.664,ADVANCE,goal depth=1.0mm
+1.696,ADVANCE,goal depth=2.0mm
+1.76,ADVANCE,goal depth=3.0mm
+1.984,ADVANCE,goal depth=4.0mm
+2.048,ADVANCE,goal depth=5.0mm
+2.112,ADVANCE,goal depth=6.0mm
+5.76,ASSISTANT_OFF,depth=-7.5mm
+6.688,BACK,goal depth=5.0mm
+25.056,SESSION_END,

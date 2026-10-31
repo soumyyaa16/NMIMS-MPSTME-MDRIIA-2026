@@ -1,0 +1,11 @@
+tier,method,hold_vs_BASE_pct,ci95_lo_mm,ci95_hi_mm,better_in_pct_runs
+C enhanced tremor,FIXED_3.5,-9.4422,-0.0055,-0.0032,100.0
+C enhanced tremor,RULE,-19.5071,-0.0102,-0.0073,100.0
+C enhanced tremor,KALMAN,-4.2326,-0.0031,-0.0008,70.0
+C enhanced tremor,WFLC,-2.1317,-0.0014,-0.0005,90.0
+C enhanced tremor,BMFLC,-2.3837,-0.0019,-0.0003,56.6667
+C enhanced tremor,RL_dr11,-10.5253,-0.0057,-0.0039,100.0
+C enhanced tremor,RL_dr12,-7.323,-0.004,-0.0026,93.3333
+C enhanced tremor,RL_dr13,-6.6713,-0.0036,-0.0025,96.6667
+C enhanced tremor,RL_dr14,-11.2804,-0.0058,-0.0044,100.0
+C enhanced tremor,RL_dr15,-7.7558,-0.0043,-0.0026,90.0

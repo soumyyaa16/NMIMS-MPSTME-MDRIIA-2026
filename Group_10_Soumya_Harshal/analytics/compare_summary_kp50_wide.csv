@@ -1,0 +1,7 @@
+tier,method,n,track_mm,hold_rms_mm,hold_max_mm,pass_pct
+C enhanced tremor,BASE,30,0.0494,0.045,0.0734,100.0
+C enhanced tremor,FIXED_3.5,30,0.832,0.0407,0.0561,100.0
+C enhanced tremor,RULE,30,0.4172,0.0362,0.0514,100.0
+C enhanced tremor,KALMAN,30,0.0526,0.0431,0.0614,100.0
+C enhanced tremor,WFLC,30,0.0484,0.044,0.0711,100.0
+C enhanced tremor,BMFLC,30,0.0479,0.0439,0.069,100.0

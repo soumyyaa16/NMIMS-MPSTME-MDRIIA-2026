@@ -1,0 +1,16 @@
+input,value,unit,tag,source_or_formula
+N_total,256,patients,CITED,[O26] bilateral DBS patients at one centre
+years,12,years,CITED,[O26] 2012-2023
+T_man,220,min,CITED,"[O26] median operative time, frame + C-arm (cheapest frame method)"
+T_rob,129,min,CITED,"[O26] median operative time, robot + intra-op CT"
+c_man,106.6,% of ref,CITED,"[O26] median total cost, frame + C-arm (capital excluded)"
+c_rob,117.5,% of ref,CITED,"[O26] median total cost, robot + iCT (capital excluded; vs C-arm p = 0.37, not significant)"
+fac_pct,20.8,% of ref,CITED,"[O26] facility cost, frame + C-arm"
+turn,85,min,CITED,[K22] mean neurosurgical turnover (83-88 min across periods)
+cost_min,36.795,USD/min,CITED,"[C18] mean OR cost per minute, California FY2014 (36.14 ambulatory, 37.45 inpatient); only used to size CapEx as a ratio (approximation: treated as the facility share of [O26] total cost)"
+capex_usd,1050000.0,USD,CITED,"[R25] midpoint of 0.6-1.5 M (reseller blog estimate, not peer reviewed): swept"
+life_fac,1.639,x CapEx,DERIVED,"[C18b] 1 + 663/1038 = 1 + maintenance/acquisition (da Vinci benchmark, not a neuro robot)"
+T_life,7.0,years,ASSUMPTION,"useful life, no source: swept 5-10"
+m,0.5,x C_baseline,ASSUMPTION,margin earned by one EXTRA case the freed OR time makes possible: the one number nobody publishes; swept 0-1
+weeks,48,weeks/year,ASSUMPTION,operating weeks (queue only)
+block,2400,OR-min/week,ASSUMPTION,"one dedicated room, 5 x 8 h (queue only)"

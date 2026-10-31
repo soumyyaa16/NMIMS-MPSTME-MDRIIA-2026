@@ -27,6 +27,8 @@ MODEL_PATH = ROOT / "models" / "surgical_7dof_robot.xml"
 DT_SIM = 0.001            # MJCF timestep (s)
 CTRL_EVERY = 2            # control + logging at 500 Hz
 DT_C = DT_SIM * CTRL_EVERY
+MEAS_NOISE_UM = 0.0       # sensor study: white noise on the MEASURED tip position used for feedback (um RMS per axis); 0 = ideal
+MEAS_DELAY_TICKS = 0      # sensor study: feedback delay in control ticks (1 tick = 2 ms); 0 = ideal
 
 HOME = np.array([0, 0, 0, -1.57079, 0, 1.57079, -0.7853])
 Q0_NOISE = 0.02           # rad, random initial-joint noise (initial-condition randomisation)
@@ -223,6 +225,8 @@ def run_trial(model, cond, seed, amp_um, k_scale=1.0, viewer=None, realtime=Fals
     hand = TremorModel(seed, amp_um)
     rng = np.random.default_rng(seed + 10_000)
     lp = StreamingLowpass()
+    rng_n = np.random.default_rng(seed + 20_000)
+    pbuf = []
 
     # --- planning gate: both end poses must be reachable
     ok_s, q_s = robot.solve_pose(plan["standoff"], plan["ins"], HOME)
@@ -271,7 +275,11 @@ def run_trial(model, cond, seed, amp_um, k_scale=1.0, viewer=None, realtime=Fals
                 e_int[:] = 0.0
 
             mujoco.mj_kinematics(m, d)
-            p_meas = d.site_xpos[tip].copy()
+            p_true = d.site_xpos[tip].copy()
+            pbuf.append(p_true)
+            p_meas = pbuf[max(0, len(pbuf) - 1 - MEAS_DELAY_TICKS)].copy()
+            if MEAS_NOISE_UM > 0:
+                p_meas = p_meas + rng_n.normal(0.0, MEAS_NOISE_UM * 1e-6, 3)
             ax_meas = d.site_xmat[tip].reshape(3, 3)[:, 2].copy()
 
             # reference path
@@ -342,8 +350,8 @@ def run_trial(model, cond, seed, amp_um, k_scale=1.0, viewer=None, realtime=Fals
             d.ctrl[:7] = np.clip(q_cmd, ctrl_lo, ctrl_hi)
 
             if record:
-                rows.append((t, state, *p_ref, *p_meas, *(p_raw - p_ref), *(p_des - p_ref),
-                             np.linalg.norm(p_meas - p_ref), w, cond_num, F_N, *d.qpos[:7],
+                rows.append((t, state, *p_ref, *p_true, *(p_raw - p_ref), *(p_des - p_ref),
+                             np.linalg.norm(p_true - p_ref), w, cond_num, F_N, *d.qpos[:7],
                              *d.qfrc_actuator[:7]))
 
         # ------- tissue resistance on the needle (axial spring-damper beyond the entry point)

@@ -1,0 +1,18 @@
+{
+  "case": "c160",
+  "scenario": "enhancing_superior",
+  "seed": 7,
+  "session_s": 41.2,
+  "time_inside_head_s": 29.3,
+  "time_on_target_s": 0.4,
+  "max_depth_mm": 55.07,
+  "max_lateral_in_head_um": 87.0,
+  "mean_lateral_assistant_on_um": 27.8,
+  "mean_lateral_assistant_off_um": null,
+  "warnings": {
+    "lateral": 0,
+    "deep": 1,
+    "sing": 1
+  },
+  "n_events": 439
+}

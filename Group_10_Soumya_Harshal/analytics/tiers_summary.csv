@@ -1,0 +1,5 @@
+tier,n,BASE_hold_rms_mm,PROP_hold_rms_mm,BASE_hold_max_mm,PROP_hold_max_mm,reduction_hold_rms_%,paired_p,pass_BASE_%,pass_PROP_%
+A typical hand,30,0.0414,0.0392,0.0646,0.0535,5.3712,0.0,100.0,100.0
+B typical + measured drift,30,0.2745,0.2735,0.3741,0.3664,0.3542,0.0863,100.0,100.0
+C enhanced tremor (our N=50 range),30,0.062,0.0402,0.1145,0.0596,35.2057,0.0,100.0,100.0
+D enhanced + measured drift,30,0.2787,0.2737,0.4045,0.3692,1.8065,0.0,93.3333,100.0

@@ -1,0 +1,348 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tremor Lab</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#ffffff;--surface:#ffffff;--ink:#0d1b26;--ink2:#44556a;--muted:#6f7f8d;--line:#d9e1e7;--soft:#eef3f6;--accent:#0b7a75;--accent-soft:#d8efed;--good:#15803d;--bad:#b42318;
+ --c-none:#7a8794;--c-fixed:#d9772a;--c-rule:#2f7fd0;--c-rl:#0b7a75;color-scheme:light}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "IBM Plex Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:20px 16px 64px}
+a{color:var(--accent)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font:500 12px/1 "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.pill{border:1px solid var(--line);border-radius:999px;padding:7px 12px;text-transform:none;letter-spacing:0;color:var(--ink2);background:#fff}
+h1{font:800 clamp(36px,6vw,64px)/1.02 "Bricolage Grotesque",sans-serif;letter-spacing:-.025em;margin:26px 0 12px}
+h1 em{font-style:normal;color:var(--accent)}
+.lede{max-width:700px;color:var(--ink2);font-size:18px;margin:0 0 24px}
+.card{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:20px;margin-bottom:18px}
+.eyebrow{font:500 11px/1 "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+h2{font:700 24px/1.15 "Bricolage Grotesque",sans-serif;margin:0 0 6px;letter-spacing:-.01em}
+.sub{color:var(--ink2);margin:0 0 14px;font-size:15px}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px}
+@media(max-width:760px){.controls{grid-template-columns:1fr}}
+.presets{display:flex;gap:8px;flex-wrap:wrap;grid-column:1/-1}
+button,select{font:inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 14px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+button.on{background:var(--accent-soft);border-color:var(--accent);color:#06524e;font-weight:600}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sl label{display:flex;justify-content:space-between;font-size:14px;color:var(--ink2);margin-bottom:4px}
+.sl output{font:500 14px "IBM Plex Mono",monospace;color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--accent);height:28px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;grid-column:1/-1;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:14px;cursor:pointer;user-select:none;background:#fff}
+.chip input{accent-color:var(--accent)}
+.chip i{width:14px;height:4px;border-radius:2px;display:inline-block}
+.chart{position:relative}
+canvas{width:100%;display:block}
+.tip{position:absolute;pointer-events:none;background:#0d1b26;color:#fff;font:500 12px/1.5 "IBM Plex Mono",monospace;padding:8px 10px;border-radius:8px;white-space:nowrap;display:none;z-index:5}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--ink2);margin-top:8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.verdict{font:700 clamp(20px,3vw,28px)/1.25 "Bricolage Grotesque",sans-serif;margin:0 0 6px}
+.bars{display:grid;gap:12px;margin-top:14px}
+.bar{display:grid;grid-template-columns:150px 1fr 88px;gap:12px;align-items:center;font-size:14px}
+@media(max-width:560px){.bar{grid-template-columns:1fr 88px}.bar .track{grid-column:1/-1;order:3}}
+.bar .nm{display:flex;align-items:center;gap:8px;color:var(--ink2)}
+.bar .nm i{width:10px;height:10px;border-radius:3px;flex:none}
+.track{height:14px;background:var(--soft);border-radius:7px;overflow:hidden}
+.track b{display:block;height:100%;border-radius:7px}
+.num{font:500 14px "IBM Plex Mono",monospace;text-align:right}
+.delta{font:500 12px "IBM Plex Mono",monospace;color:var(--muted);display:block}
+.delta.g{color:var(--good)}.delta.r{color:var(--bad)}
+ul.read{margin:0;padding-left:20px;color:var(--ink2)}
+ul.read li{margin:6px 0}
+.note{font-size:14px;color:var(--ink2);border-left:3px solid var(--line);padding:4px 0 4px 14px;margin:0}
+.mono{font-family:"IBM Plex Mono",monospace}
+.muted{color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a href="index.html">&larr; Business model &amp; results</a><span class="pill">Simulation &middot; runs in your browser &middot; not clinical</span></div>
+  <h1>Tremor <em>Lab</em></h1>
+  <p class="lede">A surgeon's hand shakes a little, even at rest. Pick a hand below and see what each filter does to the signal a surgical robot receives. The <b>learned filter</b> is the real neural network from our project, running live on this page.</p>
+
+  <div class="card">
+    <div class="eyebrow">Step 1</div>
+    <h2>Choose a hand</h2>
+    <p class="sub">Every hand is randomly generated: a tremor of 7 to 12 hertz plus a slow drift, on top of a smooth 20 mm needle move and a 3 second hold.</p>
+    <div class="controls">
+      <div class="presets" id="presets">
+        <button data-amp="40" data-drift="40" class="on">Typical hand</button>
+        <button data-amp="150" data-drift="40">Enhanced tremor</button>
+        <button data-amp="150" data-drift="280">Enhanced tremor + drift</button>
+        <button id="newhand">&#8635; New random hand</button>
+      </div>
+      <div class="sl"><label for="amp">Tremor size <output id="ampo"></output></label><input id="amp" type="range" min="20" max="250" step="5" value="40"></div>
+      <div class="sl"><label for="drift">Slow drift <output id="drifto"></output></label><input id="drift" type="range" min="0" max="300" step="10" value="40"></div>
+      <div class="chips" id="chips">
+        <label class="chip"><input type="checkbox" value="none" checked><i style="background:var(--c-none)"></i>No filter</label>
+        <label class="chip"><input type="checkbox" value="fixed" checked><i style="background:var(--c-fixed)"></i>Fixed low-pass (3.5 Hz)</label>
+        <label class="chip"><input type="checkbox" value="rule" checked><i style="background:var(--c-rule)"></i>Speed rule</label>
+        <label class="chip"><input type="checkbox" value="rl" checked><i style="background:var(--c-rl)"></i>Learned filter (AI)</label>
+        <span class="muted">Trained policy <select id="pseed" aria-label="Trained policy seed"></select> <span id="pnote"></span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">Step 2</div>
+    <h2 class="verdict" id="verdict">&nbsp;</h2>
+    <p class="sub" id="verdict2">Average over 30 random hands with these settings.</p>
+    <div class="grid2">
+      <div><div class="eyebrow">Shake while holding still (lower is better)</div><div class="bars" id="barsHold"></div></div>
+      <div><div class="eyebrow">Lag while the needle moves (lower is better)</div><div class="bars" id="barsMove"></div></div>
+    </div>
+    <p class="muted" style="margin:14px 0 0">Errors are measured against the path the surgeon <i>intended</i>, in micrometres (millionths of a metre), RMS. A human hair is about 70 micrometres thick. These numbers describe the filter's output alone. In the full robot simulation the arm's own controller already smooths some of the tremor, so the end-to-end gain is smaller (about 17% on enhanced tremor; see the <a href="index.html">results table</a>).</p>
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">Step 3</div>
+    <h2>Zoom into one hand</h2>
+    <p class="sub">The line shows how far each filter's output is from where the surgeon meant to be. The closer to zero, the better.</p>
+    <div class="eyebrow" style="margin-top:6px">Holding still at the target (3 seconds)</div>
+    <div class="chart"><canvas id="cB" height="260"></canvas><div class="tip" id="tipB"></div></div>
+    <div class="eyebrow" style="margin-top:18px">The whole move: slow-down lag shows up when the needle travels</div>
+    <div class="chart"><canvas id="cA" height="240"></canvas><div class="tip" id="tipA"></div></div>
+    <div class="muted">Values beyond the axis are clipped. The fixed filter lags by hundreds of micrometres while moving, which is why a plain low-pass is not enough.</div>
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">Inside the AI</div>
+    <h2>What the learned filter chooses, moment to moment</h2>
+    <p class="sub">Every 20 milliseconds it decides how to blend six signals: five smoothers (heavy to light) and the raw hand. While the needle moves it passes the hand through; while holding it smooths harder.</p>
+    <div class="chart"><canvas id="cC" height="150"></canvas></div>
+    <div class="legend" id="legC"></div>
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">How to read this</div>
+    <ul class="read">
+      <li><b>Tremor</b> is the fast shake (7 to 12 hertz). <b>Drift</b> is the slow wander. A filter can remove the first; nothing in this lab can remove the second.</li>
+      <li>A <b>fixed low-pass filter</b> smooths the shake but also lags behind real movement. The <b>learned filter</b> picks the smoothing to match what the hand is doing.</li>
+      <li>The <b>speed rule</b> is a hand-written version of the same idea, with no learning.</li>
+    </ul>
+  </div>
+
+  <p class="note">This lab shows the filter stage only: one axis, simulated tremor, no robot arm. The full closed-loop MuJoCo results, with statistics over 30 paired trials per hand type and 10 trained policies, are in the <a href="index.html">results table</a>. The tremor is a model, not a recording, and nothing here is clinical.</p>
+</div>
+<script src="policy.js"></script>
+<script>
+
+const FS = 500, BLOCK = 10, LAG = 20, SCALE_X = 1e-4, SCALE_V = 1e-2, TEMP = 3, NB = 6, NF = 5;
+const BANK = [1.5, 2.5, 4.0, 7.0, 14.0];
+const ENV_A = 1 - Math.exp(-1 / (0.1 * FS));
+const FIXED_FC = 3.5;
+
+function butter2(fc) {                                   // 2nd-order Butterworth low-pass, bilinear transform (same as scipy)
+  const wc = Math.tan(Math.PI * fc / FS), k1 = Math.SQRT2 * wc, k2 = wc * wc, a0 = 1 + k1 + k2;
+  return { b0: k2 / a0, b1: 2 * k2 / a0, b2: k2 / a0, a1: 2 * (k2 - 1) / a0, a2: (1 - k1 + k2) / a0 };
+}
+class Biquad {
+  constructor(fc, x0) { Object.assign(this, butter2(fc)); this.z1 = (1 - this.b0) * x0; this.z2 = (this.b2 - this.a2) * x0; }
+  step(x) { const y = this.b0 * x + this.z1; this.z1 = this.b1 * x - this.a1 * y + this.z2; this.z2 = this.b2 * x - this.a2 * y; return y; }
+}
+function softmaxW(a) {
+  const z = a.map(v => Math.max(-1, Math.min(1, v)) * TEMP), m = Math.max(...z);
+  const e = z.map(v => Math.exp(v - m)), s = e.reduce((p, q) => p + q, 0);
+  return e.map(v => v / s);
+}
+function mv(W, x, b) { return W.map((row, i) => { let s = b[i]; for (let j = 0; j < x.length; j++) s += row[j] * x[j]; return s; }); }
+function policyAction(P, obs) {
+  let h = mv(P.W0, obs, P.b0).map(Math.tanh);
+  h = mv(P.W1, h, P.b1).map(Math.tanh);
+  return mv(P.Wa, h, P.ba).map(v => Math.max(-1, Math.min(1, v)));
+}
+function ruleAction(f) {
+  const s = Math.max(0, Math.min(1, (Math.abs(f[NB + 1]) - 0.2) / 0.8));
+  const a = new Array(NB).fill(-1); a[0] = 1 - 2 * s; a[NB - 1] = 2 * s - 1; return a;
+}
+// run one filter over a whole signal r (metres). mode: 'none' | 'fixed' | 'rule' | 'rl'. Returns {out, W}
+function runFilter(mode, r, P) {
+  const n = r.length, out = new Float64Array(n);
+  if (mode === 'none') { out.set(r); return { out, W: null }; }
+  if (mode === 'fixed') { const q = new Biquad(FIXED_FC, r[0]); for (let i = 0; i < n; i++) out[i] = q.step(r[i]); return { out, W: null }; }
+  const bq = BANK.map(fc => new Biquad(fc, r[0]));
+  const b1 = new Array(LAG + 1).fill(r[0]), b2 = new Array(LAG + 1).fill(r[0]);
+  let env = 0, w = new Array(NB).fill(1 / NB), wcur = w.slice(), k = 0;
+  const W = new Float32Array(n * NB), y = new Array(NB);
+  for (let i = 0; i < n; i++) {
+    const x = r[i];
+    for (let j = 0; j < NF; j++) y[j] = bq[j].step(x);
+    y[NF] = x;
+    b1.push(y[1]); b1.shift(); b2.push(y[2]); b2.shift();
+    const va = (b1[LAG] - b1[0]) / (LAG / FS) / SCALE_V, vb = (b2[LAG] - b2[0]) / (LAG / FS) / SCALE_V;
+    env += ENV_A * (Math.abs(x - y[2]) / SCALE_X - env);
+    if (k % BLOCK === 0) {
+      const f = []; for (let j = 0; j < NB; j++) f.push((x - y[j]) / SCALE_X);
+      f.push(va, vb, env);
+      const fc = f.map(v => Math.max(-10, Math.min(10, v)));
+      const a = mode === 'rl' ? policyAction(P, fc.concat(w)) : ruleAction(fc);
+      w = softmaxW(a); wcur = w;
+    }
+    k++;
+    let o = 0; for (let j = 0; j < NB; j++) { o += y[j] * wcur[j]; W[i * NB + j] = wcur[j]; }
+    out[i] = o;
+  }
+  return { out, W };
+}
+// ---- simulated hand: intended path + tremor (3 sinusoids 7-12 Hz, weights .5/.3/.2) + slow drift
+function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const EP_S = 12, N_EP = EP_S * FS;
+const T_MOVE0 = 0.5, T_MOVE1 = 4.5, T_HOLD1 = 7.5, T_RET1 = 10.0, D_MM = 20;
+function minjerk(t) { t = Math.max(0, Math.min(1, t)); return 10 * t ** 3 - 15 * t ** 4 + 6 * t ** 5; }
+function intentAt(t) {
+  const D = D_MM * 1e-3;
+  if (t < T_MOVE0) return 0;
+  if (t < T_MOVE1) return D * minjerk((t - T_MOVE0) / (T_MOVE1 - T_MOVE0));
+  if (t < T_HOLD1) return D;
+  if (t < T_RET1) return D * (1 - minjerk((t - T_HOLD1) / (T_RET1 - T_HOLD1)));
+  return 0;
+}
+function genHand(seed, ampUm, driftUm) {
+  const rng = mulberry32(seed), u = (a, b) => a + (b - a) * rng();
+  const f = [u(7, 12), u(7, 12), u(7, 12)], ph = [u(0, 2 * Math.PI), u(0, 2 * Math.PI), u(0, 2 * Math.PI)];
+  const fd = u(0.3, 1.5), phd = u(0, 2 * Math.PI), ad = driftUm * 1e-6 * u(0.5, 1.0);
+  const wts = [0.5, 0.3, 0.2], t = new Float64Array(N_EP), intent = new Float64Array(N_EP), r = new Float64Array(N_EP);
+  for (let i = 0; i < N_EP; i++) {
+    const ti = i / FS; t[i] = ti; intent[i] = intentAt(ti);
+    let tre = 0; for (let j = 0; j < 3; j++) tre += wts[j] * Math.sin(2 * Math.PI * f[j] * ti + ph[j]);
+    r[i] = intent[i] + ampUm * 1e-6 * tre + ad * Math.sin(2 * Math.PI * fd * ti + phd);
+  }
+  return { t, intent, r };
+}
+function rms(out, intent, t0, t1) {
+  let s = 0, c = 0;
+  for (let i = 0; i < out.length; i++) { const ti = i / FS; if (ti >= t0 && ti < t1) { const e = (out[i] - intent[i]) * 1e6; s += e * e; c++; } }
+  return Math.sqrt(s / c);
+}
+const HOLD_WIN = [T_MOVE1 + 0.2, T_HOLD1], MOVE_WIN = [T_MOVE0, T_MOVE1];
+
+</script>
+<script>
+const $ = s => document.querySelector(s);
+const NAMES = { none: 'No filter', fixed: 'Fixed low-pass', rule: 'Speed rule', rl: 'Learned filter' };
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const COL = () => ({ none: css('--c-none'), fixed: css('--c-fixed'), rule: css('--c-rule'), rl: css('--c-rl') });
+const POL = window.POLICIES || {};
+const MIXCOL = ['#173f6b', '#2a6fb0', '#5aa0d8', '#9cc7ea', '#d9e8f5', '#e8833a'];
+const MIXLAB = ['1.5 Hz smoother', '2.5 Hz', '4 Hz', '7 Hz', '14 Hz', 'raw hand (no smoothing)'];
+let state = { amp: 40, drift: 40, seed: 11, pol: '1' };
+let cache = null;
+
+const seedSel = $('#pseed');
+Object.keys(POL).forEach(k => { const o = document.createElement('option'); o.value = k; o.textContent = 'seed ' + k; seedSel.appendChild(o); });
+if (!Object.keys(POL).length) { $('#pnote').textContent = '(policy.js not found: learned filter disabled)'; const c = document.querySelector('#chips input[value=rl]'); c.checked = false; c.disabled = true; }
+seedSel.onchange = () => { state.pol = seedSel.value; recompute(); };
+$('#pnote').textContent = Object.keys(POL).length ? 'of 10 independently trained' : $('#pnote').textContent;
+
+function active() { return [...document.querySelectorAll('#chips input:checked')].map(i => i.value).filter(m => m !== 'rl' || POL[state.pol]); }
+function compute1(seed) {
+  const H = genHand(seed, state.amp, state.drift), res = {};
+  ['none', 'fixed', 'rule', 'rl'].forEach(m => {
+    if (m === 'rl' && !POL[state.pol]) return;
+    const o = runFilter(m, H.r, POL[state.pol]); res[m] = { out: o.out, W: o.W,
+      hold: rms(o.out, H.intent, ...HOLD_WIN), move: rms(o.out, H.intent, ...MOVE_WIN) };
+  });
+  return { H, res };
+}
+function avg30() {
+  const acc = {}; const N = 30;
+  for (let s = 0; s < N; s++) {
+    const { H, res } = compute1(1000 + s);
+    for (const m in res) { (acc[m] = acc[m] || { hold: [], move: [] }); acc[m].hold.push(res[m].hold); acc[m].move.push(res[m].move); }
+  }
+  const mean = a => a.reduce((p, q) => p + q, 0) / a.length;
+  const out = {}; for (const m in acc) out[m] = { hold: mean(acc[m].hold), move: mean(acc[m].move), holdArr: acc[m].hold };
+  return out;
+}
+function recompute() { cache = { one: compute1(state.seed), avg: avg30() }; draw(); }
+
+function niceStep(range, n) { const raw = range / n, p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / p; return (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10) * p; }
+function setupCanvas(c, h) {
+  const dpr = window.devicePixelRatio || 1, w = c.parentElement.clientWidth;
+  c.style.height = h + 'px'; c.width = w * dpr; c.height = h * dpr;
+  const g = c.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); return { g, w, h };
+}
+function lineChart(canvas, tip, series, t0, t1, yClip, shade) {
+  const h = parseInt(canvas.getAttribute('height')), { g, w } = setupCanvas(canvas, h);
+  const L = 52, R = 12, T = 10, B = 26, pw = w - L - R, ph = h - T - B;
+  const i0 = Math.round(t0 * FS), i1 = Math.round(t1 * FS);
+  let m = 0; series.forEach(s => { for (let i = i0; i < i1; i++) m = Math.max(m, Math.abs(s.data[i])); });
+  let ymax = Math.min(yClip || 1e9, Math.max(40, m * 1.12)); const st = niceStep(ymax * 2, 4); ymax = Math.ceil(ymax / st) * st;
+  const X = t => L + (t - t0) / (t1 - t0) * pw, Y = v => T + (1 - (v + ymax) / (2 * ymax)) * ph;
+  g.clearRect(0, 0, w, h); g.font = '11px "IBM Plex Mono", monospace'; g.textBaseline = 'middle';
+  if (shade) { g.fillStyle = '#eef6f5'; g.fillRect(X(shade[0]), T, X(shade[1]) - X(shade[0]), ph); }
+  g.strokeStyle = css('--line'); g.fillStyle = css('--muted'); g.lineWidth = 1;
+  for (let v = -ymax; v <= ymax + 1e-9; v += st) { const y = Y(v); g.beginPath(); g.moveTo(L, y); g.lineTo(w - R, y); g.strokeStyle = Math.abs(v) < 1e-9 ? '#9aa8b4' : css('--line'); g.stroke(); g.textAlign = 'right'; g.fillText(Math.round(v), L - 6, y); }
+  const xs = niceStep(t1 - t0, 6); g.textAlign = 'center';
+  for (let t = Math.ceil(t0 / xs) * xs; t <= t1 + 1e-9; t += xs) { g.textAlign = X(t) > w - 30 ? 'right' : 'center'; g.fillText(t.toFixed(xs < 1 ? 1 : 0) + ' s', Math.min(X(t), w - 4), h - 10); }
+  g.save(); g.translate(12, T + ph / 2); g.rotate(-Math.PI / 2); g.textAlign = 'center'; g.fillText('error vs intended (\u00b5m)', 0, 0); g.restore();
+  g.save(); g.beginPath(); g.rect(L, T, pw, ph); g.clip();
+  series.forEach(s => { g.beginPath(); g.strokeStyle = s.color; g.lineWidth = s.w || 1.6; g.lineJoin = 'round';
+    for (let i = i0; i < i1; i++) { const x = X(i / FS), y = Y(Math.max(-ymax, Math.min(ymax, s.data[i]))); i === i0 ? g.moveTo(x, y) : g.lineTo(x, y); } g.stroke(); });
+  g.restore();
+  canvas.onmousemove = ev => {
+    const r = canvas.getBoundingClientRect(), px = ev.clientX - r.left; if (px < L || px > w - R) { tip.style.display = 'none'; return; }
+    const t = t0 + (px - L) / pw * (t1 - t0), i = Math.max(i0, Math.min(i1 - 1, Math.round(t * FS)));
+    tip.innerHTML = 't = ' + (i / FS).toFixed(2) + ' s<br>' + series.map(s => '<span style="color:' + s.color + '">\u25a0</span> ' + s.name + ': ' + s.data[i].toFixed(0) + ' \u00b5m').join('<br>');
+    tip.style.display = 'block'; tip.style.left = Math.min(w - 190, Math.max(0, px + 12)) + 'px'; tip.style.top = '8px';
+  };
+  canvas.onmouseleave = () => tip.style.display = 'none';
+}
+function mixChart(W) {
+  const c = $('#cC'), { g, w, h } = setupCanvas(c, 150), L = 52, R = 12, T = 8, B = 24, pw = w - L - R, ph = h - T - B;
+  g.clearRect(0, 0, w, h); g.font = '11px "IBM Plex Mono", monospace'; g.fillStyle = css('--muted'); g.textBaseline = 'middle';
+  if (!W) { g.textAlign = 'center'; g.fillText('Select the learned filter to see its choices', w / 2, h / 2); return; }
+  const n = N_EP, step = BLOCK, X = i => L + i / n * pw, Y = v => T + (1 - v) * ph;
+  for (let b = 0; b < n; b += step) {
+    let acc = 0; for (let j = 0; j < NB; j++) { const v = W[b * NB + j]; g.fillStyle = MIXCOL[j]; g.fillRect(X(b), Y(acc + v), Math.max(1, X(b + step) - X(b) + 0.6), v * ph + 0.5); acc += v; }
+  }
+  g.fillStyle = css('--muted'); g.textAlign = 'right'; [0, 0.5, 1].forEach(v => g.fillText(Math.round(v * 100) + '%', L - 6, Y(v)));
+  g.textAlign = 'center'; for (let t = 0; t <= EP_S; t += 2) g.fillText(t + ' s', X(t * FS), h - 9);
+  [T_MOVE0, T_MOVE1, T_HOLD1].forEach(t => { g.strokeStyle = 'rgba(13,27,38,.35)'; g.setLineDash([3, 3]); g.beginPath(); g.moveTo(X(t * FS), T); g.lineTo(X(t * FS), T + ph); g.stroke(); g.setLineDash([]); });
+}
+function bars(el, key, avg) {
+  const col = COL(), ms = Object.keys(avg), mx = Math.max(...ms.map(m => avg[m][key]));
+  el.innerHTML = ms.map(m => {
+    const v = avg[m][key], d = avg.none ? (v / avg.none[key] - 1) * 100 : 0;
+    const cls = m === 'none' ? '' : d < -0.5 ? 'g' : d > 0.5 ? 'r' : '';
+    return `<div class="bar"><span class="nm"><i style="background:${col[m]}"></i>${NAMES[m]}</span><span class="track"><b style="width:${(v / mx * 100).toFixed(1)}%;background:${col[m]}"></b></span><span class="num">${v.toFixed(0)} \u00b5m${m === 'none' ? '' : `<span class="delta ${cls}">${d > 0 ? '+' : ''}${d.toFixed(0)}%</span>`}</span></div>`;
+  }).join('');
+}
+function draw() {
+  const col = COL(), { H, res } = cache.one, act = active(), avg = {};
+  ['none', 'fixed', 'rule', 'rl'].forEach(m => { if (cache.avg[m] && (act.includes(m) || m === 'none')) avg[m] = cache.avg[m]; });
+  bars($('#barsHold'), 'hold', avg); bars($('#barsMove'), 'move', avg);
+  const rl = avg.rl, no = avg.none;
+  if (rl) {
+    const dh = (rl.hold / no.hold - 1) * 100, dm = (rl.move / no.move - 1) * 100;
+    $('#verdict').textContent = 'The learned filter holds ' + (dh < 0 ? Math.abs(dh).toFixed(0) + '% steadier' : 'no steadier') + ' than no filter' + (avg.fixed ? ', and follows the hand ' + Math.round(avg.fixed.move / Math.max(rl.move, 1)) + '\u00d7 more closely than the fixed filter.' : '.');
+    $('#verdict2').textContent = 'Average over 30 random hands with these settings. Moving error: ' + rl.move.toFixed(0) + ' \u00b5m vs ' + no.move.toFixed(0) + ' \u00b5m with no filter (' + (dm >= 0 ? '+' : '') + dm.toFixed(0) + '%). Gains shrink as slow drift grows.';
+  } else { $('#verdict').textContent = 'Choose the learned filter to compare it'; $('#verdict2').textContent = 'Average over 30 random hands with these settings.'; }
+  const mk = m => res[m] && act.includes(m) ? { name: NAMES[m], color: col[m], w: m === 'rl' ? 2.2 : 1.5, data: Float64Array.from(res[m].out, (v, i) => (v - H.intent[i]) * 1e6) } : null;
+  const ser = ['none', 'fixed', 'rule', 'rl'].map(mk).filter(Boolean);
+  lineChart($('#cB'), $('#tipB'), ser, HOLD_WIN[0], HOLD_WIN[1], 600, null);
+  lineChart($('#cA'), $('#tipA'), ser, 0, EP_S, 450, [HOLD_WIN[0], HOLD_WIN[1]]);
+  mixChart(res.rl ? res.rl.W : null);
+  $('#legC').innerHTML = MIXLAB.map((l, i) => `<span><i style="background:${MIXCOL[i]}"></i>${l}</span>`).join('');
+}
+let tmr; const later = () => { clearTimeout(tmr); tmr = setTimeout(recompute, 120); };
+function setSliders() { $('#amp').value = state.amp; $('#drift').value = state.drift; $('#ampo').textContent = state.amp + ' \u00b5m'; $('#drifto').textContent = state.drift + ' \u00b5m'; }
+$('#amp').oninput = e => { state.amp = +e.target.value; setSliders(); document.querySelectorAll('#presets button[data-amp]').forEach(b => b.classList.remove('on')); later(); };
+$('#drift').oninput = e => { state.drift = +e.target.value; setSliders(); document.querySelectorAll('#presets button[data-amp]').forEach(b => b.classList.remove('on')); later(); };
+document.querySelectorAll('#presets button[data-amp]').forEach(b => b.onclick = () => {
+  state.amp = +b.dataset.amp; state.drift = +b.dataset.drift; setSliders();
+  document.querySelectorAll('#presets button[data-amp]').forEach(x => x.classList.toggle('on', x === b)); recompute(); });
+$('#newhand').onclick = () => { state.seed = Math.floor(Math.random() * 1e6); if (cache) { cache.one = compute1(state.seed); draw(); } };
+document.querySelectorAll('#chips input').forEach(i => i.onchange = () => draw());
+window.addEventListener('resize', () => { if (cache) draw(); });
+setSliders(); recompute();
+</script>
+</body>
+</html>

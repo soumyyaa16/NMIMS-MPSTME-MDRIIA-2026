@@ -1,0 +1,95 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Case Gallery</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#ffffff;--ink:#0d1b26;--ink2:#44556a;--muted:#6f7f8d;--line:#d9e1e7;--soft:#eef3f6;--accent:#0b7a75;--accent-soft:#d8efed;color-scheme:light}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "IBM Plex Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:20px 16px 64px}
+a{color:var(--accent)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font:500 12px/1 "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.pill{border:1px solid var(--line);border-radius:999px;padding:7px 12px;text-transform:none;letter-spacing:0;color:var(--ink2)}
+h1{font:800 clamp(36px,6vw,64px)/1.02 "Bricolage Grotesque",sans-serif;letter-spacing:-.025em;margin:26px 0 12px}
+h1 em{font-style:normal;color:var(--accent)}
+.lede{max-width:720px;color:var(--ink2);font-size:18px;margin:0 0 24px}
+.layout{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start}
+@media(max-width:900px){.layout{grid-template-columns:1fr}}
+.card{border:1px solid var(--line);border-radius:14px;padding:18px;background:#fff}
+.eyebrow{font:500 11px/1 "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.grp{margin-bottom:18px}.grp:last-child{margin-bottom:0}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+button{font:inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 13px;cursor:pointer}
+button:hover{border-color:var(--accent)}button.on{background:var(--accent-soft);border-color:var(--accent);color:#06524e;font-weight:600}
+button:disabled{opacity:.4;cursor:not-allowed}
+button:focus-visible,video:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.stage{background:#0d1b26;border-radius:14px;overflow:hidden;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center}
+video{width:100%;height:100%;display:block;background:#0d1b26}
+.empty{color:#9fb0bd;padding:24px;text-align:center}
+h2{font:700 24px/1.15 "Bricolage Grotesque",sans-serif;margin:16px 0 4px}
+.meta{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 0}
+.meta span{border:1px solid var(--line);border-radius:999px;padding:5px 12px;font:500 13px "IBM Plex Mono",monospace;color:var(--ink2)}
+.note{font-size:14px;color:var(--ink2);border-left:3px solid var(--line);padding:4px 0 4px 14px;margin:20px 0 0}
+.muted{color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a href="index.html">&larr; Business model &amp; results</a><span class="pill">Simulation &middot; pre-rendered films &middot; not clinical</span></div>
+  <h1>Case <em>Gallery</em></h1>
+  <p class="lede">Pick a brain-tumour scan, then a part of the tumour and a side to approach from. A planner checks the needle path and the simulated robot carries it out while a hand tremor is injected. Every film is rendered from our MuJoCo simulation.</p>
+  <div class="layout">
+    <div class="card">
+      <div class="grp"><div class="eyebrow">1 &middot; Scan</div><div class="opts" id="cases"></div></div>
+      <div class="grp"><div class="eyebrow">2 &middot; Tumour part</div><div class="opts" id="lesions"></div></div>
+      <div class="grp"><div class="eyebrow">3 &middot; Needle enters</div><div class="opts" id="zones"></div></div>
+      <div class="muted" id="count"></div>
+    </div>
+    <div>
+      <div class="stage" id="stage"><div class="empty">Loading the gallery&hellip;</div></div>
+      <h2 id="ttl"></h2>
+      <div class="meta" id="meta"></div>
+      <p class="muted" id="what" style="margin-top:12px"></p>
+    </div>
+  </div>
+  <p class="note">What the films show: the unassisted hand (no filter) next to the assisted run, with a simulated tremor of 150 &micro;m injected. The assistance in these films is the plan-aware filter; the learned filter is compared in the <a href="lab.html">Tremor Lab</a> and the <a href="index.html">results table</a>. Scans come from the public BraTS brain-tumour research dataset. Running a <i>new</i> scan needs the full simulator, which runs on our demo laptop: ask us for a live run. Simulation only; nothing here is clinical.</p>
+</div>
+<script src="cases.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+let DATA = null, sel = { c: null, l: null, z: null };
+const LES = { enhancing: 'Enhancing tumour (active edge)', necrotic: 'Necrotic core (dead centre)', edema: 'Oedema (swelling around)' };
+const ZN = { superior: 'Top', anterior: 'Front', posterior: 'Back', left: 'Left side', right: 'Right side', inferior: 'Below' };
+function chips(el, items, cur, on, label, off) {
+  el.innerHTML = '';
+  items.forEach(it => { const b = document.createElement('button'); b.textContent = label(it); b.className = it === cur ? 'on' : ''; b.disabled = off ? off(it) : false; b.onclick = () => on(it); el.appendChild(b); });
+}
+function caseObj() { return DATA.cases.find(c => c.id === sel.c); }
+function render() {
+  const co = caseObj(), lesions = [...new Set(co.scenarios.map(s => s.lesion))];
+  if (!lesions.includes(sel.l)) sel.l = lesions[0];
+  const zs = co.scenarios.filter(s => s.lesion === sel.l).map(s => s.zone);
+  if (!zs.includes(sel.z)) sel.z = zs[0];
+  chips($('#cases'), DATA.cases.map(c => c.id), sel.c, c => { sel.c = c; render(); }, c => 'Scan ' + c.toUpperCase());
+  chips($('#lesions'), ['enhancing', 'necrotic', 'edema'], sel.l, l => { sel.l = l; render(); }, l => LES[l], l => !lesions.includes(l));
+  chips($('#zones'), ['superior', 'anterior', 'posterior', 'left', 'right', 'inferior'], sel.z, z => { sel.z = z; render(); }, z => ZN[z], z => !zs.includes(z));
+  $('#count').textContent = co.scenarios.length + ' films for this scan (' + co.reachable + ' needle paths pass the planner).';
+  const s = co.scenarios.find(x => x.lesion === sel.l && x.zone === sel.z);
+  $('#ttl').textContent = LES[s.lesion] + ', needle enters ' + s.zone_text.replace('from ', '');
+  $('#meta').innerHTML = ['Scan ' + co.id.toUpperCase(), 'path ' + s.path_mm + ' mm', 'clearance ' + s.clearance_mm + ' mm', s.size_mb + ' MB'].map(t => '<span>' + t + '</span>').join('');
+  $('#what').textContent = 'Needle path planned for the ' + LES[s.lesion].toLowerCase() + ', approaching ' + s.zone_text + '.';
+  const st = $('#stage'); st.innerHTML = '';
+  const v = document.createElement('video'); v.controls = true; v.playsInline = true; v.preload = 'metadata'; v.src = s.video; v.setAttribute('aria-label', $('#ttl').textContent);
+  v.onerror = () => { st.innerHTML = '<div class="empty">This film is not available yet.</div>'; };
+  st.appendChild(v);
+}
+(window.CASES ? Promise.resolve(window.CASES) : fetch('cases.json').then(r => r.json())).then(d => {
+  DATA = d; if (!d.cases.length) throw 0;
+  sel.c = d.cases[0].id; render();
+}).catch(() => { $('#stage').innerHTML = '<div class="empty">No films found yet. Run <code>python src\\batch_videos.py</code> to create them.</div>'; });
+</script>
+</body>
+</html>

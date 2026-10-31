@@ -1,0 +1,18 @@
+{
+  "case": "c040",
+  "scenario": "enhancing_superior",
+  "seed": 7,
+  "session_s": 25.1,
+  "time_inside_head_s": 17.9,
+  "time_on_target_s": 0.0,
+  "max_depth_mm": 5.15,
+  "max_lateral_in_head_um": 151.0,
+  "mean_lateral_assistant_on_um": null,
+  "mean_lateral_assistant_off_um": 54.8,
+  "warnings": {
+    "lateral": 0,
+    "deep": 0,
+    "sing": 0
+  },
+  "n_events": 23
+}

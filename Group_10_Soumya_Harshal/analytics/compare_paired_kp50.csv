@@ -1,0 +1,37 @@
+tier,method,hold_vs_BASE_pct,ci95_lo_mm,ci95_hi_mm,better_in_pct_runs
+A typical hand,FIXED_3.5,-1.1241,-0.0006,-0.0003,90.0
+A typical hand,RULE,-11.7544,-0.006,-0.0037,93.3333
+A typical hand,KALMAN,3.789,0.0012,0.0019,3.3333
+A typical hand,WFLC,0.039,-0.0001,0.0001,56.6667
+A typical hand,BMFLC,1.1886,0.0003,0.0007,20.0
+A typical hand,RL_dr1,-12.3631,-0.006,-0.0043,100.0
+A typical hand,RL_dr2,-10.2151,-0.005,-0.0034,100.0
+A typical hand,RL_dr3,-14.0487,-0.0069,-0.0048,100.0
+A typical hand,PROP,-1.0094,-0.0006,-0.0003,86.6667
+B typical + measured drift,FIXED_3.5,-0.3088,-0.002,0.0002,60.0
+B typical + measured drift,RULE,-11.1764,-0.0394,-0.0245,93.3333
+B typical + measured drift,KALMAN,4.4807,0.0107,0.015,0.0
+B typical + measured drift,WFLC,0.9942,0.002,0.0037,10.0
+B typical + measured drift,BMFLC,1.352,0.0028,0.005,13.3333
+B typical + measured drift,RL_dr1,0.6121,-0.0002,0.0035,36.6667
+B typical + measured drift,RL_dr2,-2.4997,-0.0087,-0.0057,96.6667
+B typical + measured drift,RL_dr3,-3.2585,-0.0111,-0.0076,96.6667
+B typical + measured drift,PROP,-0.2922,-0.0019,0.0002,60.0
+C enhanced tremor,FIXED_3.5,-9.4422,-0.0055,-0.0032,100.0
+C enhanced tremor,RULE,-19.5071,-0.0104,-0.0073,100.0
+C enhanced tremor,KALMAN,-4.1989,-0.003,-0.0008,70.0
+C enhanced tremor,WFLC,-2.1317,-0.0014,-0.0005,90.0
+C enhanced tremor,BMFLC,-2.3837,-0.0019,-0.0004,56.6667
+C enhanced tremor,RL_dr1,-17.6182,-0.0091,-0.0069,100.0
+C enhanced tremor,RL_dr2,-17.4779,-0.0091,-0.0067,100.0
+C enhanced tremor,RL_dr3,-17.9753,-0.0091,-0.0071,100.0
+C enhanced tremor,PROP,-9.3384,-0.0054,-0.0031,100.0
+D enhanced + measured drift,FIXED_3.5,-0.5103,-0.0026,-0.0004,66.6667
+D enhanced + measured drift,RULE,-11.3893,-0.0403,-0.0251,93.3333
+D enhanced + measured drift,KALMAN,4.2865,0.0101,0.0145,0.0
+D enhanced + measured drift,WFLC,-0.2422,-0.0019,0.0005,66.6667
+D enhanced + measured drift,BMFLC,1.2642,0.0026,0.0048,16.6667
+D enhanced + measured drift,RL_dr1,-0.8477,-0.0043,-0.0005,73.3333
+D enhanced + measured drift,RL_dr2,-3.852,-0.0127,-0.0092,96.6667
+D enhanced + measured drift,RL_dr3,-3.7847,-0.0126,-0.0091,100.0
+D enhanced + measured drift,PROP,-0.4937,-0.0026,-0.0003,66.6667

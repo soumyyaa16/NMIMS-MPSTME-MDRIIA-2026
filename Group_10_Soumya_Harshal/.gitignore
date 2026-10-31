@@ -3,3 +3,8 @@ analytics_test/
 __pycache__/
 /cases/
 models/_case_*.xml
+
+models/_vis_*.xml
+models/franka_emika_panda/panda_visual.xml
+docs/film/
+docs/site/videos/

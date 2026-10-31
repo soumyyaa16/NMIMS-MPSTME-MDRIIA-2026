@@ -1,0 +1,23 @@
+quantity,value,unit
+DBS cases / year  N = N_total / years,21.33333,cases/yr
+minutes saved per case  dT = T_man - T_rob,91,min
+H_reclaimed = dT * N / 60,32.35556,OR-h/yr
+NCRI = (c_man - c_rob) / c_man,-0.10225,-
+kappa = C_robot / C_baseline,1.10225,-
+extra cases the freed time allows  dN = N * dT/(T_rob+turn),9.07165,cases/yr
+annual benefit  N*NCRI + dN*m,2.35446,x C_baseline / yr
+"C_baseline (USD, only to size CapEx)",41486.3625,USD
+CapEx ratio K = CapEx / C_baseline,25.30952,x C_baseline
+CapEx + lifetime maintenance,41.48231,x C_baseline
+P_payback = CapEx_total / (T_life * benefit),2.51694,-
+T_payback,211.42309,months
+margin floor m_floor (extra case must beat this to be worth doing),0.24046,x C_baseline
+break-even margin m* at this volume (P = 1),0.89371,x C_baseline
+break-even volume N* at m = 0.5 (P = 1),53.69475,cases/yr
+lambda,0.44444,cases/week
+mu manual,7.86885,cases/week
+mu robot,11.21495,cases/week
+rho manual,0.05648,-
+rho robot,0.03963,-
+Wq manual,1.27807,hours
+Wq robot,0.61815,hours

@@ -1,0 +1,5 @@
+comparison,metric,mean_diff_mm,ci95_lo,ci95_hi,rl_better_in_pct_of_runs
+RL minus FIXED_3.5,rmse_track_mm,-0.1178,-0.1199,-0.1159,100.0
+RL minus FIXED_3.5,hold_rms_mm,0.0013,0.0002,0.0024,44.0
+RL minus RULE,rmse_track_mm,0.2959,0.2936,0.2982,0.0
+RL minus RULE,hold_rms_mm,0.0062,0.0051,0.0076,2.0

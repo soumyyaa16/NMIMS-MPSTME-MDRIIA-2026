@@ -1,0 +1,41 @@
+tier,method,n,track_mm,hold_rms_mm,hold_max_mm,pass_pct
+A typical hand,BASE,30,0.0457,0.0411,0.0582,100.0
+A typical hand,FIXED_3.5,30,0.832,0.0406,0.0545,100.0
+A typical hand,RULE,30,0.4151,0.0362,0.0518,100.0
+A typical hand,KALMAN,30,0.0519,0.0426,0.0578,100.0
+A typical hand,WFLC,30,0.0456,0.0411,0.0569,100.0
+A typical hand,BMFLC,30,0.0456,0.0415,0.0583,100.0
+A typical hand,RL_dr1,30,0.0523,0.036,0.0488,100.0
+A typical hand,RL_dr2,30,0.0599,0.0369,0.0506,100.0
+A typical hand,RL_dr3,30,0.0562,0.0353,0.0484,100.0
+A typical hand,PROP,30,0.0451,0.0406,0.0547,100.0
+B typical + measured drift,BASE,30,0.2866,0.2851,0.3841,100.0
+B typical + measured drift,FIXED_3.5,30,0.8778,0.2842,0.3803,100.0
+B typical + measured drift,RULE,30,0.501,0.2532,0.3369,100.0
+B typical + measured drift,KALMAN,30,0.3011,0.2979,0.4005,93.3333
+B typical + measured drift,WFLC,30,0.2908,0.2879,0.3873,100.0
+B typical + measured drift,BMFLC,30,0.292,0.289,0.3893,100.0
+B typical + measured drift,RL_dr1,30,0.2877,0.2868,0.3895,96.6667
+B typical + measured drift,RL_dr2,30,0.2861,0.278,0.3772,100.0
+B typical + measured drift,RL_dr3,30,0.2849,0.2758,0.3798,100.0
+B typical + measured drift,PROP,30,0.2832,0.2843,0.3805,100.0
+C enhanced tremor,BASE,30,0.0494,0.045,0.0734,100.0
+C enhanced tremor,FIXED_3.5,30,0.832,0.0407,0.0561,100.0
+C enhanced tremor,RULE,30,0.4172,0.0362,0.0514,100.0
+C enhanced tremor,KALMAN,30,0.0526,0.0431,0.0615,100.0
+C enhanced tremor,WFLC,30,0.0484,0.044,0.0711,100.0
+C enhanced tremor,BMFLC,30,0.0479,0.0439,0.069,100.0
+C enhanced tremor,RL_dr1,30,0.0554,0.0371,0.0531,100.0
+C enhanced tremor,RL_dr2,30,0.0611,0.0371,0.054,100.0
+C enhanced tremor,RL_dr3,30,0.0592,0.0369,0.0537,100.0
+C enhanced tremor,PROP,30,0.0453,0.0408,0.0563,100.0
+D enhanced + measured drift,BASE,30,0.2873,0.2857,0.3919,100.0
+D enhanced + measured drift,FIXED_3.5,30,0.8778,0.2842,0.3809,100.0
+D enhanced + measured drift,RULE,30,0.5019,0.2532,0.3368,100.0
+D enhanced + measured drift,KALMAN,30,0.3012,0.298,0.4015,93.3333
+D enhanced + measured drift,WFLC,30,0.2885,0.285,0.3902,100.0
+D enhanced + measured drift,BMFLC,30,0.2923,0.2893,0.3952,100.0
+D enhanced + measured drift,RL_dr1,30,0.2873,0.2833,0.3895,96.6667
+D enhanced + measured drift,RL_dr2,30,0.2847,0.2747,0.3772,96.6667
+D enhanced + measured drift,RL_dr3,30,0.2853,0.2749,0.3794,96.6667
+D enhanced + measured drift,PROP,30,0.2833,0.2843,0.3811,100.0

@@ -1,0 +1,4 @@
+t_s,event,detail
+0.0,SESSION_START,c160/enhancing_superior seed=7 tremor=150um
+0.0,ASSISTANT_ON,default
+0.288,SESSION_END,

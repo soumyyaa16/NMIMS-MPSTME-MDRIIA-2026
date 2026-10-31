@@ -1,0 +1,29 @@
+tier,pair,hold_diff_um,hold_ci_um,hold,track_diff_um,track_ci_um,track
+A typical hand,RL_dr1 vs KALMAN,-6.3,"[-7.4,-5.3]",A better,2.3,"[+1.6,+3.0]",B better
+A typical hand,RL_dr2 vs KALMAN,-5.6,"[-6.6,-4.6]",A better,10.2,"[+9.3,+11.1]",B better
+A typical hand,RL_dr3 vs KALMAN,-6.9,"[-8.2,-5.7]",A better,6.6,"[+5.6,+7.5]",B better
+A typical hand,RL_dr1 vs PROP,-4.3,"[-5.1,-3.5]",A better,8.1,"[+7.5,+8.6]",B better
+A typical hand,RL_dr2 vs PROP,-3.5,"[-4.3,-2.9]",A better,16.0,"[+15.2,+16.8]",B better
+A typical hand,RL_dr3 vs PROP,-4.8,"[-5.8,-4.0]",A better,12.3,"[+11.5,+13.2]",B better
+A typical hand,KALMAN vs PROP,2.1,"[+1.7,+2.4]",B better,5.8,"[+5.5,+6.1]",B better
+B typical + measured drift,RL_dr1 vs KALMAN,-7.5,"[-9.0,-6.0]",A better,-11.9,"[-13.2,-10.6]",A better
+B typical + measured drift,RL_dr2 vs KALMAN,-17.2,"[-19.0,-15.2]",A better,-13.6,"[-15.5,-11.5]",A better
+B typical + measured drift,RL_dr3 vs KALMAN,-19.6,"[-21.5,-17.5]",A better,-14.8,"[-16.7,-13.0]",A better
+B typical + measured drift,RL_dr1 vs PROP,5.2,"[+3.2,+7.4]",B better,6.1,"[+4.9,+7.3]",B better
+B typical + measured drift,RL_dr2 vs PROP,-4.5,"[-5.9,-3.1]",A better,4.3,"[+3.4,+5.3]",B better
+B typical + measured drift,RL_dr3 vs PROP,-6.9,"[-8.9,-4.8]",A better,3.1,"[+2.1,+4.1]",B better
+B typical + measured drift,KALMAN vs PROP,12.7,"[+10.3,+15.1]",B better,17.9,"[+15.7,+20.3]",B better
+C enhanced tremor,RL_dr1 vs KALMAN,-7.6,"[-8.8,-6.5]",A better,9.9,"[+7.8,+12.0]",B better
+C enhanced tremor,RL_dr2 vs KALMAN,-6.7,"[-7.9,-5.6]",A better,15.1,"[+13.4,+16.8]",B better
+C enhanced tremor,RL_dr3 vs KALMAN,-6.4,"[-7.4,-5.4]",A better,13.6,"[+11.5,+15.6]",B better
+C enhanced tremor,RL_dr1 vs PROP,-3.0,"[-3.8,-2.2]",A better,18.8,"[+16.2,+21.6]",B better
+C enhanced tremor,RL_dr2 vs PROP,-2.1,"[-3.2,-1.0]",A better,24.1,"[+21.9,+26.4]",B better
+C enhanced tremor,RL_dr3 vs PROP,-1.8,"[-2.9,-0.6]",A better,22.6,"[+20.0,+25.3]",B better
+C enhanced tremor,KALMAN vs PROP,4.6,"[+3.8,+5.5]",B better,9.0,"[+8.1,+10.0]",B better
+D enhanced + measured drift,RL_dr1 vs KALMAN,-10.0,"[-11.8,-8.0]",A better,-10.7,"[-12.2,-9.2]",A better
+D enhanced + measured drift,RL_dr2 vs KALMAN,-19.6,"[-21.9,-17.2]",A better,-13.4,"[-15.6,-11.2]",A better
+D enhanced + measured drift,RL_dr3 vs KALMAN,-19.7,"[-21.8,-17.5]",A better,-12.8,"[-14.9,-10.8]",A better
+D enhanced + measured drift,RL_dr1 vs PROP,3.1,"[+0.5,+6.0]",B better,7.8,"[+6.4,+9.3]",B better
+D enhanced + measured drift,RL_dr2 vs PROP,-6.5,"[-7.8,-5.1]",A better,5.1,"[+4.2,+6.1]",B better
+D enhanced + measured drift,RL_dr3 vs PROP,-6.6,"[-8.3,-4.6]",A better,5.7,"[+4.6,+6.8]",B better
+D enhanced + measured drift,KALMAN vs PROP,13.1,"[+10.8,+15.5]",B better,18.5,"[+16.4,+20.8]",B better

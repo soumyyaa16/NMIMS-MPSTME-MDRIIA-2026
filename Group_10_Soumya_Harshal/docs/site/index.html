@@ -1,0 +1,333 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Surgical Robot Business Case</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one long evidence page. Verdict first, then a live model, then the proof (sim, FMEA, inputs, sources). */
+:root{
+  --bg:#ffffff; --surface:#ffffff; --ink:#0d1b26; --ink2:#44556a; --muted:#6f7f8d; --line:#d9e1e7; --soft:#e8eef2;
+  --accent:#0b7a75; --accent-soft:#d8efed; --good:#15803d; --bad:#b42318; --warn:#a15c07;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --grid:#e3e9ee;
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif; --f-body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif; --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--f-body);padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px));margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-block:28px 64px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;letter-spacing:-.015em;line-height:1.08}
+h2{font-size:clamp(24px,3.4vw,32px);font-weight:700}
+h3{font-size:17px;font-weight:700;letter-spacing:-.005em}
+p{margin:0}
+.eyebrow{font:500 12px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.top{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:5px 12px;font:500 12px var(--f-mono);color:var(--ink2)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+/* hero */
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;align-items:end}
+.hero h1{font-size:clamp(34px,6vw,64px);font-weight:800}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero .lede{color:var(--ink2);font-size:17px;max-width:56ch;margin-top:16px}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.fact{background:var(--surface);padding:16px 18px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.fact b{font:700 clamp(26px,3.6vw,38px)/1 var(--f-display);letter-spacing:-.02em}
+.fact span{color:var(--ink2);font-size:13px}
+.fact small{color:var(--muted);font:400 11px var(--f-mono)}
+/* panels */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:18px;min-width:0}
+.sub{color:var(--ink2);max-width:72ch}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.model{display:grid;grid-template-columns:320px 1fr;gap:22px}
+.ctrl{display:flex;flex-direction:column;gap:14px}
+.ctrl label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--ink2)}
+.ctrl .row{display:flex;justify-content:space-between;gap:8px}
+.ctrl output{font:500 13px var(--f-mono);color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--accent);height:22px}
+button{font:500 13px var(--f-body);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:8px 12px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.verdict{border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:6px;border:1px solid var(--line)}
+.verdict.no{background:color-mix(in srgb,var(--bad) 9%,var(--surface));border-color:color-mix(in srgb,var(--bad) 35%,var(--line))}
+.verdict.yes{background:color-mix(in srgb,var(--good) 9%,var(--surface));border-color:color-mix(in srgb,var(--good) 35%,var(--line))}
+.verdict .big{font:800 26px/1.1 var(--f-display)}
+.verdict.no .big{color:var(--bad)} .verdict.yes .big{color:var(--good)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.kpi{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;min-width:0}
+.kpi b{font:600 20px var(--f-mono)} .kpi span{font-size:12px;color:var(--muted)}
+/* charts */
+.chart{position:relative;min-width:0}
+.chart svg{width:100%;height:auto;display:block;overflow:visible}
+.chart text{font:400 11px var(--f-mono);fill:var(--muted)}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:12px/1.5 var(--f-mono);color:var(--ink);box-shadow:0 4px 18px rgba(0,0,0,.12);transform:translate(-50%,-110%);white-space:nowrap;z-index:3}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--ink2)}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
+details summary{cursor:pointer;font-size:13px;color:var(--ink2)}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tag{font:500 10.5px var(--f-mono);padding:2px 7px;border-radius:99px;border:1px solid var(--line);letter-spacing:.04em}
+.tag.CITED{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.tag.DERIVED{color:var(--s1);border-color:color-mix(in srgb,var(--s1) 45%,var(--line))}
+.tag.ASSUMPTION{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 55%,var(--line));background:color-mix(in srgb,var(--warn) 8%,var(--surface))}
+.tag.SIM{color:var(--ink2)}
+.bar{height:8px;border-radius:4px;background:var(--accent);min-width:2px}
+.bar.lag{background:var(--warn)}
+.budget{display:flex;height:44px;border-radius:8px;overflow:hidden;gap:2px;background:var(--surface)}
+.budget div{display:flex;align-items:center;padding:0 10px;font:500 12px var(--f-mono);color:#fff;white-space:nowrap;overflow:hidden;min-width:0}
+.note{border-left:3px solid var(--warn);padding:10px 14px;background:color-mix(in srgb,var(--warn) 7%,var(--surface));color:var(--ink2);font-size:14px;border-radius:0 8px 8px 0}
+a{color:var(--accent)}
+footer{color:var(--muted);font:12px var(--f-mono);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media (max-width:860px){.model>div:last-child{order:-1}.hero,.model,.grid2{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}.panel{padding:16px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <span class="eyebrow">MDRIIA Group 10 &middot; CSBS techno-economic model</span>
+    <span class="pill"><span class="dot"></span>Simulation study, not clinical &middot; money is a ratio, no currency</span>
+    <a class="pill" href="lab.html" style="text-decoration:none;color:inherit;border-color:var(--accent)"><b>Try the Tremor Lab &rarr;</b></a>
+    <a class="pill" href="cases.html" style="text-decoration:none;color:inherit;border-color:var(--accent)"><b>Case gallery &rarr;</b></a>
+  </div>
+
+  <section class="hero">
+    <div>
+      <h1>A 7-DOF surgical assistant frees <em id="h-hours">32</em> OR hours a year. At <span id="h-n">21</span> DBS cases it still does not pay back.</h1>
+      <p class="lede">The robot does not make a case cheaper. It makes the room faster: 91 minutes saved per deep brain stimulation case. Whether that is worth the purchase depends on volume, and every number behind that statement is cited, derived, or labelled as an assumption you can move below.</p>
+    </div>
+    <div class="facts">
+      <div class="fact"><b id="h-dt">91 min</b><span>saved per DBS case</span><small>220 &rarr; 129 min, Owens 2026</small></div>
+      <div class="fact"><b id="h-p">2.5</b><span>payback ratio P</span><small>P &lt; 1 pays back within life</small></div>
+      <div class="fact"><b id="h-ns">54</b><span>cases a year to break even</span><small>at a margin of 0.5</small></div>
+      <div class="fact"><b id="h-ms">0.89</b><span>margin needed at today's volume</span><small>per extra case, x frame-case cost</small></div>
+    </div>
+  </section>
+
+  <section class="panel" id="model">
+    <div><span class="eyebrow">Live model</span><h2>Move an input, watch the verdict</h2>
+    <p class="sub" style="margin-top:8px">Defaults are the published values. The two amber inputs have no source anywhere in the literature, so they are the ones to argue about.</p></div>
+    <div class="model">
+      <div class="ctrl" id="ctrl"></div>
+      <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+        <div class="verdict" id="verdict"></div>
+        <div class="kpis" id="kpis"></div>
+      </div>
+    </div>
+    <div class="grid2">
+    <div><h3>Payback against volume</h3><p class="sub" style="font-size:13px;margin:4px 0 8px">Below the dashed line the robot repays its purchase and upkeep within its life.</p>
+      <div class="legend" id="lg-vol"></div><div class="chart" id="c-vol"></div></div>
+    <div><h3>Payback against margin</h3><p class="sub" style="font-size:13px;margin:4px 0 8px">The value of one extra case is the one number nobody publishes.</p>
+      <div class="legend" id="lg-m"></div><div class="chart" id="c-m"></div></div>
+  </div>
+    <details><summary>Show the chart data as a table</summary><div class="tablewrap" id="t-vol" style="margin-top:8px"></div></details>
+  </section>
+
+  <section class="grid2">
+    <div class="panel"><div><span class="eyebrow">What moves the answer</span><h3 style="margin-top:4px">Sensitivity, each input &plusmn;30 %</h3></div>
+      <div class="chart" id="c-tor"></div>
+      <p class="sub" style="font-size:13px">Bars show P when one input moves 30 % either way; the line at 1 is break-even. Margin and robot case cost swing it most, and both are uncertain.</p></div>
+    <div class="panel"><div><span class="eyebrow">Queue</span><h3 style="margin-top:4px">Waiting is not the bottleneck at this volume</h3></div>
+      <div class="legend" id="lg-q"></div><div class="chart" id="c-q"></div>
+      <p class="sub" style="font-size:13px" id="q-note"></p></div>
+  </section>
+
+  <section class="panel">
+    <div><span class="eyebrow">Where the simulation fits</span><h2>Tremor is a small slice of a roughly 1 mm error budget</h2>
+    <p class="sub" style="margin-top:8px">The whole-system radial error of DBS is about 1.06 mm (Giridharan 2022; 1.01 to 1.32 mm in a Barcelona cohort, 2025). Our MuJoCo study measures the hand-tremor part of that, and nothing else.</p></div>
+    <div class="budget" id="budget"></div>
+    <div class="legend" id="budget-lg"></div>
+    <div class="note">Because the filter's share is under 1 % of the budget, we make no claim that it changes revision rates, outcomes or cost. The business case above does not use it.</div>
+  </section>
+
+  <section class="panel">
+    <div><span class="eyebrow">Robotics evidence</span><h2>Which filter actually helps the hand hold still</h2>
+    <p class="sub" style="margin-top:8px">Enhanced-tremor hands, 30 paired MuJoCo trials per method, tuned position loop (KP 50). Hold error is the tip's RMS error while holding at the target. Tracking error is measured while inserting. Methods that win hold error by lagging the hand pay for it in tracking.</p></div>
+    <div class="tablewrap"><table id="t-sim"></table></div>
+    <div class="grid2">
+      <div class="note">Drift is the real floor. With measured-scale drift every method sits at about 0.28 mm hold error, and no tremor filter touches it.</div>
+      <div class="note">Feedback delay matters more than the filter: at the original gains the loop is stable to about 2 ms and diverges from 6 ms. Real latency must be measured before any hardware claim.</div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div><span class="eyebrow">Failure modes</span><h2>FMEA, seven rows, five backed by simulation</h2>
+    <p class="sub" style="margin-top:8px">Severity, occurrence and detection are team judgements on a 1 to 10 scale. The evidence column says where each mitigation is shown.</p></div>
+    <div class="tablewrap"><table id="t-fmea"></table></div>
+  </section>
+
+  <section class="panel">
+    <div><span class="eyebrow">Parameter provenance</span><h2>Every constant, with its kind and where it came from</h2>
+    <p class="sub" style="margin-top:8px"><span class="tag CITED">CITED</span> copied from a paper &nbsp; <span class="tag DERIVED">DERIVED</span> calculated from cited numbers &nbsp; <span class="tag ASSUMPTION">ASSUMPTION</span> no source exists, so it is swept &nbsp; <span class="tag SIM">SIM</span> our own simulation</p></div>
+    <div class="tablewrap"><table id="t-in"></table></div>
+  </section>
+
+  <section class="panel">
+    <div><span class="eyebrow">References</span><h2>Sources</h2></div>
+    <div class="tablewrap"><table id="t-src"></table></div>
+    <div class="note">Limits. Costs come from one Utah centre (capital excluded) and a 2025 vendor price list that is not peer reviewed. Maintenance uses a da Vinci benchmark because no neurosurgical figure exists. Margin per extra case and equipment life are assumptions. CapEx is turned into a ratio using Childers' OR cost per minute as a stand-in for Owens' facility cost; break-even volume moves one-for-one with that ratio, so it is the least rigorous step. The hand tremor in our simulation is a model, not a recording, and the arm is ideal. Nothing here is clinical.</div>
+  </section>
+
+  <footer><span>Soumya Singh (E071) &middot; Harshal Khandekar (E033) &middot; MDRIIA 702CO0E012</span><span>Reproduce: python analytics\surgical_or_economics.py</span></footer>
+</div>
+
+<script>
+/* ---- model: a line-for-line port of analytics/surgical_or_economics.py ---- */
+const INPUTS = [
+ ["N_total",256,"patients","CITED","Owens et al. 2026: bilateral DBS patients at one centre","O26"],
+ ["years",12,"years","CITED","Owens et al. 2026: 2012 to 2023","O26"],
+ ["T_man",220,"min","CITED","Owens 2026: median operative time, frame + C-arm","O26"],
+ ["T_rob",129,"min","CITED","Owens 2026: median operative time, robot + intra-op CT","O26"],
+ ["c_man",106.6,"% of ref","CITED","Owens 2026: median total cost, frame + C-arm (capital excluded)","O26"],
+ ["c_rob",117.5,"% of ref","CITED","Owens 2026: median total cost, robot + iCT (capital excluded; p = 0.37 vs C-arm, not significant)","O26"],
+ ["fac_pct",20.8,"% of ref","CITED","Owens 2026: facility cost, frame + C-arm","O26"],
+ ["turn",85,"min","CITED","Koester 2022: mean neurosurgical turnover (83 to 88 min)","K22"],
+ ["cost_min",36.795,"USD/min","CITED","Childers 2018: mean OR cost per minute; used only to size CapEx as a ratio. Approximation: treated as the facility share of Owens' total cost","C18"],
+ ["capex_usd",1.05e6,"USD","CITED","R2 Surgical vendor blog, Jun 2025: neurosurgery robots 0.6 to 1.5 M, midpoint used (reseller estimate, no peer-reviewed source)","R25"],
+ ["life_fac",1.639,"x CapEx","DERIVED","1 + 663/1038 = 1 + maintenance/acquisition (Childers 2018b, da Vinci benchmark)","C18b"],
+ ["T_life",7,"years","ASSUMPTION","useful life, no source; swept 5 to 10","-"],
+ ["m",0.5,"x frame case","ASSUMPTION","margin of one extra case the freed room time allows; nobody publishes it; swept 0 to 1","-"],
+ ["weeks",48,"weeks/yr","ASSUMPTION","operating weeks (queue only)","-"],
+ ["block",2400,"OR-min/wk","ASSUMPTION","one dedicated room, 5 x 8 h (queue only)","-"]];
+const D = Object.fromEntries(INPUTS.map(r=>[r[0],r[1]]));
+function erlangC(c,a){let s=0,t=1;for(let k=0;k<c;k++){if(k>0)t*=a/k;s+=t}const top=t*(a/c)*(c/(c-a));return top/(s+top)}
+function wqWeeks(lam,mu,c=1){return lam>=c*mu?Infinity:erlangC(c,lam/mu)/(c*mu-lam)}
+function model(p,Nov){
+  const N=Nov==null?p.N_total/p.years:Nov, dT=p.T_man-p.T_rob, H=dT*N/60, ncri=(p.c_man-p.c_rob)/p.c_man, g=dT/(p.T_rob+p.turn), dN=N*g;
+  const benefit=N*ncri+dN*p.m, Cb=p.cost_min*p.T_man/(p.fac_pct/p.c_man), K=p.capex_usd/Cb, capex=K*p.life_fac;
+  const P=benefit>0?capex/(p.T_life*benefit):Infinity, Tm=benefit>0?12*capex/benefit:Infinity, need=capex/p.T_life;
+  const mFloor=g>0?-ncri/g:Infinity, mStar=dN>0?(need-N*ncri)/dN:Infinity, den=ncri+g*p.m, Nstar=den>0?need/den:Infinity;
+  const lam=N/p.weeks, muM=p.block/(p.T_man+p.turn), muR=p.block/(p.T_rob+p.turn);
+  return {N,dT,H,ncri,g,dN,benefit,K,capex,P,Tm,mFloor,mStar,Nstar,lam,muM,muR,rhoM:lam/muM,rhoR:lam/muR,wqM:wqWeeks(lam,muM)*168,wqR:wqWeeks(lam,muR)*168};
+}
+const FMEA=[
+ ["Singular configuration: joint-speed spike","arm jerks near a singular pose; needle leaves the plan",8,4,4,"adaptive damping, null space, abort below a manipulability threshold",8,2,3,"Simulation + code (singularity test)"],
+ ["Filter phase lag: overshoot at target","a fixed low-pass lags the moving hand (0.83 mm tracking error)",6,5,4,"learned filter keeps tracking near 0.06 mm",6,2,3,"Simulation (30 trials per hand type, 10 RL seeds)"],
+ ["Drift dominates tremor","slow drift (about 0.28 mm, not filterable) is the largest error at measured values",8,7,5,"reported as a limit; imaging feedback needed to remove it",8,7,4,"Simulation (10 RL seeds: mean benefit 1 to 3 % under drift, single seeds from -5 to +2 %)"],
+ ["RL policy fails on an unseen hand","wrong filter mix, extra error",7,3,6,"output is a mix of fixed safe filters; trained on randomised hands, tested on unseen seeds",7,2,4,"Simulation (10 RL seeds: 90 to 100 % of runs hold below 0.5 mm; 100 % without drift)"],
+ ["Feedback delay destabilises the loop","error x5 at 4 ms, divergence from 6 ms at KP 100",9,5,4,"lower loop gain (KP 100 to 50); measure real latency first",9,3,3,"Simulation (delay sweep, 10 seeds)"],
+ ["Demand below break-even volume","robot never pays back; capacity idle",7,8,3,"pool the robot across DBS, biopsy and sEEG; report N* before purchase",7,5,3,"This model (break-even volume)"],
+ ["Image-to-robot registration error","whole plan shifts; invisible to the simulation",9,5,6,"none in this work: stated limitation",9,5,6,"Not shown"]];
+const SIM=[ // method, hold mm, tracking mm  (enhanced tremor, KP 50, N=30)
+ ["No filter",0.045,0.049],["Fixed low-pass 3.5 Hz",0.041,0.832],["Speed rule",0.036,0.417],["Kalman",0.043,0.053],["WFLC",0.044,0.048],["BMFLC",0.044,0.048],
+ ["Plan-aware filter (uses the plan)",0.041,0.045],["Learned filter (RL, mean of 10 seeds)",0.037,0.059]];
+const SRC=[ // author, where, used for, url, status
+ ["Owens et al.","Stereotact Funct Neurosurg 2026 (online 17 Mar 2026): Cost Variability in Stereotactic Technique for Deep Brain Stimulation","256 patients, 2012 to 2023, four techniques, capital excluded: operative times 220 and 129 min, costs 106.6 and 117.5, facility 20.8; robot vs C-arm total cost p = 0.374","https://karger.com/article/doi/10.1159/000551466","Checked against the paper, 28 Oct 2026"],
+ ["Childers & Maggard-Gibbons","JAMA Surg 2018;153(4):e176233","OR cost per minute, California FY2014: $36.14 ambulatory, $37.45 inpatient","https://doi.org/10.1001/jamasurg.2017.6233","Checked against the paper, 28 Oct 2026"],
+ ["Childers & Maggard-Gibbons","JAMA 2018;320(8):835-836","Robot acquisition $1038 and service contract $663 per procedure (2017 spending)","https://doi.org/10.1001/jama.2018.9219","Checked against the paper, 28 Oct 2026"],
+ ["Koester et al.","J Clin Outcomes Manag 2022;29(6):208-213","Neurosurgical OR turnover 83 to 88 min across periods (which period is which is inferred from the text)","https://doi.org/10.12788/jcom.0113","Checked, 28 Oct 2026"],
+ ["R2 Surgical","Vendor blog, 27 Jun 2025: How Much is a Surgical Robot?","Neurosurgery systems USD 0.6 to 1.5 M (three stereotactic robots). Written by a pre-owned robot reseller, cites no peer-reviewed source","https://r2surgical.com/blogs/news/how-much-is-a-surgical-robot-2025-edition","Checked, 28 Oct 2026. Weak source, so the price is swept"],
+ ["Giridharan et al.","Oper Neurosurg 2022;23(3):254-260","Robot-assisted DBS radial error 1.06 mm (SD 0.55, n = 126 procedures)","https://researchexperts.utmb.edu/en/publications/robot-assisted-deep-brain-stimulation-high-accuracy-and-streamlin/","Checked, 28 Oct 2026"],
+ ["Barcelona DBS cohort","2025","Radial error 1.01 to 1.32 mm","","Abstract supplied by the team, not rechecked"],
+ ["Riviere, Rader & Thakor","IEEE Trans Biomed Eng 1998;45(7):839-846","WFLC tremor-filter baseline","","Cited from memory, not rechecked"],
+ ["Veluvolu & Ang","Sensors 2011;11(3):3020-3036","BMFLC tremor-filter baseline","","Cited from memory, not rechecked"],
+ ["Elble","2005","Physiological tremor frequency band","","Cited from memory, not rechecked"],
+ ["Noorani & Naiem","2024","Reinforcement learning for tremor suppression: prior art, so we claim no 'first'","","Abstract supplied by the team, not rechecked"]];
+
+/* ---- helpers ---- */
+const $=id=>document.getElementById(id);
+const fmt=(x,d=2)=>!isFinite(x)?"never":x.toFixed(d);
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function niceTicks(a,b,n){const step0=(b-a)/n,mag=Math.pow(10,Math.floor(Math.log10(step0))),r=step0/mag,st=(r<1.5?1:r<3?2:r<7?5:10)*mag,out=[];for(let v=Math.ceil(a/st)*st;v<=b+1e-9;v+=st)out.push(+v.toFixed(10));return out}
+const NS="http://www.w3.org/2000/svg";
+function el(tag,attrs,parent,txt){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(txt!=null)e.textContent=txt;parent&&parent.appendChild(e);return e}
+
+/* generic line chart with hover tooltip. o: {x:[a,b], y:[a,b], series:[{name,color,f}], hline:{y}, vline:{x,label}, dots:[{x,y,color,label}], xl, yl, tip(x,vals)} */
+function lineChart(host,o){
+  host.innerHTML="";const W=520,H=320,m={l:44,r:12,t:12,b:42},iw=W-m.l-m.r,ih=H-m.t-m.b;
+  const sx=v=>m.l+(v-o.x[0])/(o.x[1]-o.x[0])*iw, sy=v=>m.t+ih-(Math.min(v,o.y[1]*1.5)-o.y[0])/(o.y[1]-o.y[0])*ih;
+  const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":o.aria||"chart"},host);
+  const cid="c"+Math.random().toString(36).slice(2,8);el("clipPath",{id:cid},el("defs",{},svg)).appendChild(el("rect",{x:m.l,y:m.t,width:iw,height:ih}));
+  for(const t of niceTicks(o.y[0],o.y[1],5)){el("line",{x1:m.l,x2:W-m.r,y1:sy(t),y2:sy(t),stroke:css("--grid"),"stroke-width":1},svg);el("text",{x:m.l-8,y:sy(t)+4,"text-anchor":"end"},svg,t)}
+  for(const t of niceTicks(o.x[0],o.x[1],6)){el("text",{x:sx(t),y:H-m.b+18,"text-anchor":"middle"},svg,t)}
+  el("line",{x1:m.l,x2:W-m.r,y1:sy(o.y[0]),y2:sy(o.y[0]),stroke:css("--line")},svg);
+  el("text",{x:m.l+iw/2,y:H-6,"text-anchor":"middle"},svg,o.xl);el("text",{x:12,y:m.t+ih/2,transform:`rotate(-90 12 ${m.t+ih/2})`,"text-anchor":"middle"},svg,o.yl);
+  const g=el("g",{"clip-path":`url(#${cid})`},svg);
+  if(o.hline!=null){el("line",{x1:m.l,x2:W-m.r,y1:sy(o.hline),y2:sy(o.hline),stroke:css("--ink2"),"stroke-dasharray":"5 4","stroke-width":1.2},g)}
+  if(o.vline){el("line",{x1:sx(o.vline.x),x2:sx(o.vline.x),y1:m.t,y2:m.t+ih,stroke:css("--ink"),"stroke-width":1},g)}
+  for(const s of o.series){let d="";for(let i=0;i<=200;i++){const x=o.x[0]+(o.x[1]-o.x[0])*i/200,y=s.f(x);d+=(i?"L":"M")+sx(x).toFixed(1)+","+sy(isFinite(y)?y:o.y[1]*1.5).toFixed(1)}el("path",{d,fill:"none",stroke:s.color,"stroke-width":2.2,"stroke-linejoin":"round"},g)}
+  if(o.vline)el("text",{x:Math.min(sx(o.vline.x)+6,W-m.r-70),y:m.t+12},svg,o.vline.label);
+  for(const d of (o.dots||[])){if(!isFinite(d.x)||d.x<o.x[0]||d.x>o.x[1])continue;el("circle",{cx:sx(d.x),cy:sy(d.y),r:5,fill:d.color,stroke:css("--surface"),"stroke-width":2},svg)}
+  const cross=el("line",{y1:m.t,y2:m.t+ih,stroke:css("--muted"),"stroke-width":1,visibility:"hidden"},svg);
+  const hd=o.series.map(s=>el("circle",{r:4.5,fill:s.color,stroke:css("--surface"),"stroke-width":2,visibility:"hidden"},svg));
+  const tip=document.createElement("div");tip.className="tip";tip.hidden=true;host.appendChild(tip);
+  const ov=el("rect",{x:m.l,y:m.t,width:iw,height:ih,fill:"transparent"},svg);
+  const move=ev=>{const r=svg.getBoundingClientRect(),px=(ev.clientX-r.left)/r.width*W;let x=o.x[0]+(px-m.l)/iw*(o.x[1]-o.x[0]);x=Math.max(o.x[0],Math.min(o.x[1],x));
+    cross.setAttribute("x1",sx(x));cross.setAttribute("x2",sx(x));cross.setAttribute("visibility","visible");
+    const vals=o.series.map((s,i)=>{const y=s.f(x);hd[i].setAttribute("cx",sx(x));hd[i].setAttribute("cy",sy(isFinite(y)?y:o.y[1]*1.5));hd[i].setAttribute("visibility",y<=o.y[1]*1.5?"visible":"hidden");return y});
+    tip.innerHTML=o.tip(x,vals);tip.hidden=false;tip.style.left=Math.max(70,Math.min(r.width-70,sx(x)/W*r.width))+"px";tip.style.top=(m.t/H*r.height+30)+"px"};
+  ov.addEventListener("pointermove",move);ov.addEventListener("pointerdown",move);
+  ov.addEventListener("pointerleave",()=>{cross.setAttribute("visibility","hidden");hd.forEach(h=>h.setAttribute("visibility","hidden"));tip.hidden=true});
+}
+
+/* ---- state + controls ---- */
+const CTRL=[
+ ["N","DBS cases per year",5,120,"any",D.N_total/D.years,v=>v.toFixed(1),false],
+ ["m","Margin of one extra case (x frame case)",0,1,0.01,D.m,v=>v.toFixed(2),true],
+ ["T_life","Useful life of the robot (years)",5,10,0.5,D.T_life,v=>v.toFixed(1),true],
+ ["capex_usd","Purchase price (USD, vendor estimate)",6e5,1.5e6,5e4,D.capex_usd,v=>"$"+(v/1e6).toFixed(2)+" M",false],
+ ["c_rob","Robot case cost excl. capital (% of ref)",90,140,0.5,D.c_rob,v=>v.toFixed(1),false],
+ ["T_rob","Robot operative time (min)",90,180,1,D.T_rob,v=>v.toFixed(0),false]];
+const S={N:D.N_total/D.years,m:D.m,T_life:D.T_life,capex_usd:D.capex_usd,c_rob:D.c_rob,T_rob:D.T_rob};
+const pNow=()=>Object.assign({},D,S,{N_total:D.N_total});
+function buildControls(){const c=$("ctrl");
+  for(const [k,lab,lo,hi,st,val,f,amb] of CTRL){const l=document.createElement("label");
+    l.innerHTML=`<span class="row"><span${amb?' style="color:var(--warn)"':""}>${lab}</span><output id="o-${k}"></output></span><input type="range" id="i-${k}" min="${lo}" max="${hi}" step="${st}" value="${val}">`;c.appendChild(l);
+    const inp=l.querySelector("input"),out=l.querySelector("output");out.textContent=f(val);
+    inp.addEventListener("input",()=>{S[k]=+inp.value;out.textContent=f(S[k]);render()})}
+  const b=document.createElement("button");b.textContent="Reset to published values";b.addEventListener("click",()=>{for(const [k,,, ,, val,f] of CTRL){S[k]=val;$("i-"+k).value=val;$("o-"+k).textContent=f(val)}render()});c.appendChild(b)}
+
+function render(){
+  const p=pNow(),r=model(p,S.N), pm=Object.assign({},p);
+  const ok=r.P<=1;$("verdict").className="verdict "+(ok?"yes":"no");
+  $("verdict").innerHTML=`<span class="eyebrow">Verdict at these inputs</span><span class="big">${ok?"Pays back within its life":"Does not pay back within its life"}</span><span style="color:var(--ink2);font-size:14px">P = ${fmt(r.P)}${isFinite(r.Tm)?` &middot; payback ${fmt(r.Tm,0)} months against a ${S.T_life}-year life`:""}. Break-even needs ${fmt(r.Nstar,0)} cases a year at this margin, or a margin of ${fmt(r.mStar)} at this volume.</span>`;
+  $("kpis").innerHTML=[[fmt(r.H,1),"OR hours reclaimed / yr"],[fmt(r.dN,1),"extra cases / yr the time allows"],[fmt(r.ncri*100,1)+" %","per-case cost saving (negative = dearer)"],[fmt(r.K,1)+"x","purchase = this many frame cases"]].map(([a,b])=>`<div class="kpi"><b>${a}</b><span>${b}</span></div>`).join("");
+  const cols=["var(--s1)","var(--s2)","var(--s3)"],ms=[0.35,0.5,0.65],cc=["--s1","--s2","--s3"];
+  const ser=ms.map((mm,i)=>({name:"m = "+mm,color:css(cc[i]),f:x=>model(Object.assign({},p,{m:mm}),x).P}));
+  $("lg-vol").innerHTML=ms.map((mm,i)=>`<span><i style="background:${cols[i]}"></i>margin ${mm} (break-even ${fmt(model(Object.assign({},p,{m:mm})).Nstar,0)}/yr)</span>`).join("");
+  lineChart($("c-vol"),{x:[5,120],y:[0,6],series:ser,hline:1,vline:{x:S.N,label:"you: "+fmt(S.N,0)+"/yr"},xl:"DBS cases per year",yl:"payback ratio P",aria:"Payback ratio against volume for three margins",
+    dots:ms.map((mm,i)=>({x:model(Object.assign({},p,{m:mm})).Nstar,y:1,color:css(cc[i])})),
+    tip:(x,v)=>`<b>${fmt(x,0)} cases / yr</b><br>`+ms.map((mm,i)=>`m ${mm}: P ${fmt(v[i])}`).join("<br>")});
+  $("lg-m").innerHTML=`<span><i style="background:var(--s1)"></i>P at ${fmt(S.N,0)} cases/yr</span>`;
+  lineChart($("c-m"),{x:[0,1],y:[0,6],series:[{name:"P",color:css("--s1"),f:x=>model(Object.assign({},p,{m:x}),S.N).P}],hline:1,vline:{x:S.m,label:"you: "+S.m.toFixed(2)},xl:"margin of one extra case (x frame case)",yl:"payback ratio P",aria:"Payback ratio against margin",
+    dots:[{x:r.mStar,y:1,color:css("--bad")}],tip:(x,v)=>`<b>margin ${x.toFixed(2)}</b><br>P ${fmt(v[0])}`});
+  $("t-vol").innerHTML="<table><tr><th>cases / yr</th><th>P (m 0.35)</th><th>P (m 0.5)</th><th>P (m 0.65)</th></tr>"+[10,20,30,40,54,70,90,120].map(n=>`<tr><td class="num">${n}</td>`+ms.map(mm=>`<td class="num">${fmt(model(Object.assign({},p,{m:mm}),n).P)}</td>`).join("")+"</tr>").join("")+"</table>";
+  tornado(p);queue(p,r);
+}
+function tornado(p){
+  const keys=[["capex_usd","Purchase price"],["T_life","Useful life"],["m","Margin per extra case"],["T_rob","Robot operative time"],["c_rob","Robot case cost"],["turn","Turnover time"],["life_fac","Maintenance factor"],["N_total","Case volume"]];
+  const base=model(p,S.N).P;let rows=keys.map(([k,l])=>{const a=model(Object.assign({},p,{[k]:p[k]*.7}),S.N).P,b=model(Object.assign({},p,{[k]:p[k]*1.3}),S.N).P;return{l,a,b,span:Math.abs(Math.min(a,8)-Math.min(b,8))}}).sort((x,y)=>y.span-x.span);
+  const host=$("c-tor");host.innerHTML="";const W=520,rh=30,H=rows.length*rh+44,L=150,iw=W-L-14,sx=v=>L+Math.min(v,8)/8*iw;
+  const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Tornado chart of payback ratio sensitivity"},host);
+  for(const t of [0,2,4,6,8]){el("line",{x1:sx(t),x2:sx(t),y1:4,y2:H-30,stroke:css("--grid")},svg);el("text",{x:sx(t),y:H-12,"text-anchor":"middle"},svg,t===8?"8+":t)}
+  rows.forEach((r,i)=>{const y=8+i*rh,lo=Math.min(r.a,r.b),hi=Math.max(r.a,r.b);el("text",{x:L-8,y:y+13,"text-anchor":"end",style:"fill:var(--ink2);font-family:var(--f-body);font-size:12px"},svg,r.l);
+    el("rect",{x:sx(lo),y:y+3,width:Math.max(3,sx(hi)-sx(lo)),height:12,rx:4,fill:css("--s1"),opacity:.85},svg)});
+  el("line",{x1:sx(1),x2:sx(1),y1:2,y2:H-30,stroke:css("--bad"),"stroke-dasharray":"4 3","stroke-width":1.4},svg);el("line",{x1:sx(Math.min(base,8)),x2:sx(Math.min(base,8)),y1:2,y2:H-30,stroke:css("--ink"),"stroke-width":1.4},svg);
+  el("text",{x:sx(1)-5,y:H-34,"text-anchor":"end",style:"fill:var(--bad)"},svg,"break-even");
+}
+function queue(p,r){
+  $("lg-q").innerHTML=`<span><i style="background:var(--s2)"></i>frame (service ${fmt(r.muM,1)}/wk)</span><span><i style="background:var(--s1)"></i>robot (service ${fmt(r.muR,1)}/wk)</span>`;
+  const W=(rho,mu)=>wqWeeks(rho*mu,mu)*168;
+  lineChart($("c-q"),{x:[0.05,0.95],y:[0,400],series:[{name:"frame",color:css("--s2"),f:x=>W(x,r.muM)},{name:"robot",color:css("--s1"),f:x=>W(x,r.muR)}],xl:"utilisation of the room (arrival rate / service rate)",yl:"mean wait (hours)",aria:"Queue wait against utilisation",
+    dots:[{x:r.rhoM,y:r.wqM,color:css("--s2")},{x:r.rhoR,y:r.wqR,color:css("--s1")}],tip:(x,v)=>`<b>utilisation ${x.toFixed(2)}</b><br>frame ${fmt(v[0],0)} h<br>robot ${fmt(v[1],0)} h`});
+  $("q-note").textContent=`At ${fmt(r.lam,2)} cases a week one room is busy ${fmt(r.rhoM*100,1)} % of the time with the frame and ${fmt(r.rhoR*100,1)} % with the robot. Average wait drops from ${fmt(r.wqM,1)} h to ${fmt(r.wqR,1)} h (M/M/1).`;
+}
+function static_(){
+  const r=model(D);$("h-hours").textContent=fmt(r.H,0);$("h-n").textContent=fmt(r.N,0);$("h-dt").textContent=fmt(r.dT,0)+" min";$("h-p").textContent=fmt(r.P,1);$("h-ns").textContent=fmt(r.Nstar,0);$("h-ms").textContent=fmt(r.mStar,2);
+  const B=1.06,parts=[["drift 0.28 mm",.28,"var(--warn)"],["tremor 0.04 mm",.043,"var(--s1)"],["",.0065,"var(--accent)"],["everything else in the budget",B-.28-.043-.0065,"var(--muted)"]];
+  $("budget").innerHTML=parts.map(([l,v,c])=>`<div style="flex:${v};background:${c};${v<.02?'padding:0':''}" title="${l}">${v>.03?l:""}</div>`).join("");
+  $("budget-lg").innerHTML=`<span><i style="background:var(--warn)"></i>measured-scale drift, 26 %: no tremor filter removes it</span><span><i style="background:var(--s1)"></i>tremor hold error, 4 %</span><span><i style="background:var(--accent)"></i>what the learned filter removes, 0.5 to 0.8 %</span>`;
+  $("t-sim").innerHTML="<tr><th>Method</th><th>Hold error (mm)</th><th></th><th>Tracking error (mm)</th></tr>"+SIM.map(([n,h,t],i)=>`<tr${i===7?' style="background:var(--accent-soft)"':""}><td>${n}</td><td class="num">${h.toFixed(3)}</td><td style="width:34%"><div class="bar${t>.2?" lag":""}" style="width:${h/0.05*100}%"></div></td><td class="num">${t.toFixed(3)}${t>.2?' <span class="tag ASSUMPTION">lag</span>':""}</td></tr>`).join("");
+  $("t-fmea").innerHTML="<tr><th>Failure mode</th><th>Effect</th><th>RPN before</th><th>Mitigation</th><th>RPN after</th><th>Shown in</th></tr>"+FMEA.map(f=>`<tr><td><b>${f[0]}</b></td><td>${f[1]}</td><td class="num">${f[2]*f[3]*f[4]}</td><td>${f[5]}</td><td class="num">${f[6]*f[7]*f[8]}</td><td>${f[9]}</td></tr>`).join("");
+  $("t-in").innerHTML="<tr><th>Input</th><th>Value</th><th>Unit</th><th>Kind</th><th>Source or formula</th></tr>"+INPUTS.map(r=>`<tr><td class="mono">${r[0]}</td><td class="num">${r[1]}</td><td>${r[2]}</td><td><span class="tag ${r[3]}">${r[3]}</span></td><td>${r[4]}</td></tr>`).join("");
+  $("t-src").innerHTML="<tr><th>Author</th><th>Where</th><th>Used for</th><th>Status</th></tr>"+SRC.map(r=>`<tr><td>${r[0]}</td><td>${r[3]?`<a href="${r[3]}" target="_blank" rel="noopener">${r[1]}</a>`:r[1]}</td><td>${r[2]}</td><td>${r[4]}</td></tr>`).join("");
+}
+buildControls();static_();render();
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",render);
+</script>
+</body>
+</html>
