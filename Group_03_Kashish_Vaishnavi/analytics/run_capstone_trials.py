@@ -30,6 +30,7 @@ from aedrover.capstone.monte_carlo import (  # noqa: E402
     CONDITIONS,
     CONTROLLERS,
     PRIMARY_METRIC,
+    PROTOCOL_CONDITIONS,
     SEED_BASE,
     run_monte_carlo,
     statistics_table,
@@ -51,7 +52,7 @@ def write_outputs(df: pd.DataFrame, out: Path) -> None:
     rep = out / "telemetry" / "representative_run_500hz.csv"
     if rep.exists():
         trajectory_plot(rep, figs / "capstone_trajectory.png")
-    primary_boxplot(df, figs / "capstone_ttfs_boxplot.png", PRIMARY_METRIC, "lane_splitting")
+    primary_boxplot(df, figs / "capstone_ttfs_boxplot.png", PRIMARY_METRIC, PROTOCOL_CONDITIONS)
 
 
 def main() -> None:

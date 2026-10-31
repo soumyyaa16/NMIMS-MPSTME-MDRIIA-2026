@@ -64,6 +64,32 @@ def sensitivity_plot(sweep_df: pd.DataFrame, name: str, base_value: float, break
     return Path(out)
 
 
+def sensitivity_compact(sweep_df: pd.DataFrame, name: str, base_value: float, breakevens: dict[str, float],
+                        out: str | Path, band: float = 0.30) -> Path:
+    """The same sensitivity as ``sensitivity_plot`` as two stacked panels in a portrait figure: readable at half a page width."""
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(4.2, 5.4), sharex=True, constrained_layout=True)
+    x = sweep_df[name]
+    ax1.loglog(x, sweep_df["kappa"], color=COLORS["proposed"], lw=2)
+    ax1.axhline(1.0, color="k", lw=0.8, ls=":")
+    ax1.axhline(0.25, color="#b03a2e", lw=0.9, ls="--")
+    ax1.text(x.iloc[0], 0.27, "target 0.25", fontsize=8, color="#b03a2e")
+    ax2.semilogx(x, sweep_df["NCRI"].clip(lower=-5), color=COLORS["baseline"], lw=2)
+    ax2.axhline(0.0, color="k", lw=0.8, ls=":")
+    for ax in (ax1, ax2):
+        ax.axvspan(base_value * (1 - band), base_value * (1 + band), color="#1f6f8b", alpha=0.2)
+        for v in breakevens.values():
+            if np.isfinite(v):
+                ax.axvline(v, color="#b03a2e", lw=1.0, ls="--")
+        ax.tick_params(labelsize=8)
+    ax1.set_ylabel("kappa = C_robot / C_baseline", fontsize=8)
+    ax2.set_ylabel("NCRI = 1 - kappa (clipped at -5)", fontsize=8)
+    ax2.set_xlabel("arrests per 100,000 per year", fontsize=8)
+    fig.suptitle("Sensitivity (shaded: base +/-30 %; dashed: break-even)", fontsize=8.5)
+    fig.savefig(out, dpi=DPI)
+    plt.close(fig)
+    return Path(out)
+
+
 def queue_plot(lam: float, mu: float, out: str | Path, c_values=(1, 2, 3)) -> Path:
     """Mean wait W_q against utilisation rho for several pod counts (M/M/c, Erlang C)."""
     from .business import mmc_wait
@@ -97,9 +123,13 @@ def fmea_plot(fmea: pd.DataFrame, out: str | Path) -> Path:
 
 
 def primary_boxplot(df: pd.DataFrame, out: str | Path, metric: str = "ttfs_min",
-                    condition: str | None = None) -> Path:
-    """Box plot of the primary metric, baseline vs proposed, successful runs only."""
-    sub = df if condition is None else df[df["condition"] == condition]
+                    condition: str | tuple[str, ...] | None = None) -> Path:
+    """Box plot of the primary metric, baseline vs proposed, successful runs only.
+
+    ``condition`` may be one condition, several (pooled), or ``None`` for all of them.
+    """
+    conds = (condition,) if isinstance(condition, str) else condition
+    sub = df if conds is None else df[df["condition"].isin(conds)]
     sub = sub[sub["success"] == 1]
     labels = ["baseline", "proposed"]
     data = [sub[sub["controller"] == lab][metric].dropna().to_numpy() for lab in labels]
@@ -108,7 +138,8 @@ def primary_boxplot(df: pd.DataFrame, out: str | Path, metric: str = "ttfs_min",
     for patch, lab in zip(bp["boxes"], labels, strict=True):
         patch.set_facecolor(COLORS[lab]), patch.set_alpha(0.6)
     ax.set_ylabel(metric.replace("_", " "))
-    ax.set_title(f"{metric}: {condition or 'all conditions'}")
+    label = conds[0] if conds is not None and len(conds) == 1 else ("protocol conditions pooled" if conds is not None else "all conditions")
+    ax.set_title(f"{metric}: {label}")
     fig.savefig(out, dpi=DPI)
     plt.close(fig)
     return Path(out)

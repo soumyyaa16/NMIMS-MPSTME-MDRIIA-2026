@@ -36,7 +36,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from aedrover.analysis.experiments import controller_spec  # noqa: E402
-from aedrover.control.safety_filter import SafetyFilter  # noqa: E402
+from aedrover.control.safety_filter import SafetyFilter, SafetyParams  # noqa: E402
 from aedrover.drone.mission import MissionParams, MissionStepper, mission_time_s  # noqa: E402
 from aedrover.nav.base import make_controller  # noqa: E402
 from aedrover.sim.env import AEDRoverEnv  # noqa: E402
@@ -56,7 +56,7 @@ ROLLOUT_SHOW_STEPS = 12           # a planner snapshot is drawn for this many co
 DRONE_LANE_Y = -1.0               # the drone flies 1 m to the rover's right, so the two never overlap
 
 
-def build_controller(name: str):
+def build_controller(name: str, cruise: float = 3.5):
     extra: dict = {}
     if name == "ppo":
         extra["path"] = str(REPO / "models" / "ppo_selected")
@@ -64,8 +64,10 @@ def build_controller(name: str):
         extra = {**_tuned_mppi(), "nthread": 8}
     if name == "fsm_dwa":                  # capstone controller: mission FSM supervising the dynamic-window planner
         import aedrover.capstone.fsm  # noqa: F401  (registers fsm_dwa)
-        return make_controller("fsm_dwa")
-    cname, kw = controller_spec(name, 2.0, **extra)
+        # the settings of the evaluated "proposed" arm (capstone.monte_carlo._PROPOSED)
+        return make_controller("fsm_dwa", v_cruise=cruise, fsm_kwargs={"v_cruise": cruise, "mu_belief": 0.35},
+                               safety_kwargs={"t_react": 0.05})
+    cname, kw = controller_spec(name, cruise if name != "pure_pursuit" else None, **extra)
     return make_controller(cname, **kw)
 
 
@@ -103,9 +105,11 @@ class Session:
     def __init__(self, a, env: AEDRoverEnv, seed: int, size: tuple[int, int]) -> None:
         self.a, self.env, self.seed = a, env, seed
         env.reset(seed=seed, options={"family": a.family})
-        self.ctrl, self.shield = build_controller(a.controller), SafetyFilter()
+        self.ctrl = build_controller(a.controller, a.cruise)
+        self.shield = None if a.no_shield else SafetyFilter(SafetyParams(t_react=0.05) if a.controller == "fsm_dwa" else SafetyParams())
         self.ctrl.reset(env)
-        self.shield.reset()
+        if self.shield is not None:
+            self.shield.reset()
         self.is_mppi = a.controller == "mppi"
         if self.is_mppi:
             self.ctrl.capture = True
@@ -135,7 +139,9 @@ class Session:
         env, steps = self.env, 0
         while not self.done and env._t < t_target and (max_steps is None or steps < max_steps):
             obs = env.obs
-            v, d = self.shield(obs, *self.ctrl.act(obs))
+            v, d = self.ctrl.act(obs)
+            if self.shield is not None:
+                v, d = self.shield(obs, v, d)
             if self.is_mppi and self.ctrl.last_rollouts is not None:
                 self.snapshot, self.snap_step = self.ctrl.last_rollouts, env._steps
                 self.ctrl.last_rollouts = None
@@ -212,7 +218,7 @@ class Session:
 
 
 def run_live(a, win: Window) -> None:
-    env = AEDRoverEnv(obs_mode="dict", veh=VehicleParams.by_name("optimized"), rich=a.rich)
+    env = AEDRoverEnv(obs_mode="dict", veh=VehicleParams.by_name(a.vehicle), rich=a.rich)
     seed = a.seed
     while win.ok:
         win.splash(f"{a.controller}  |  {a.family}  |  seed {seed}", "building the scene ...")
@@ -245,7 +251,7 @@ def run_record(a) -> None:
     import imageio.v2 as imageio
 
     w, h = (int(x) for x in a.size.split("x"))
-    env = AEDRoverEnv(obs_mode="dict", veh=VehicleParams.by_name("optimized"), rich=a.rich)
+    env = AEDRoverEnv(obs_mode="dict", veh=VehicleParams.by_name(a.vehicle), rich=a.rich)
     ses = Session(a, env, a.seed, (w, h))
     out = Path(a.record)
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -300,7 +306,11 @@ def run_replay(a, win: Window) -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--controller", default="ppo", choices=("ppo", "mppi", "dwa", "apf", "pure_pursuit", "fsm_dwa"))
+    ap.add_argument("--controller", default="fsm_dwa", choices=("ppo", "mppi", "dwa", "apf", "pure_pursuit", "fsm_dwa"))
+    ap.add_argument("--vehicle", default="course", choices=("course", "nominal", "optimized"),
+                    help="course = the starter pack's values (default); optimized = this repository's co-designed chassis")
+    ap.add_argument("--cruise", type=float, default=3.5, help="road cruise speed [m/s]; the course guide specifies 3.5")
+    ap.add_argument("--no-shield", action="store_true", help="disable the safety filter (shows the unprotected failure)")
     ap.add_argument("--family", default="crowded")
     ap.add_argument("--seed", type=int, default=5021)
     ap.add_argument("--size", default="1280x720")

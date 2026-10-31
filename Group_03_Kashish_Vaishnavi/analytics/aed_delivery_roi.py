@@ -1,4 +1,4 @@
-﻿"""CSBS business script for the capstone dossier (Section 3). Dimensionless; no currency anywhere.
+"""CSBS business script for the capstone dossier (Section 3). Dimensionless; no currency anywhere.
 
     python analytics/aed_delivery_roi.py
 
@@ -35,7 +35,7 @@ from aedrover.capstone.business import (  # noqa: E402
     tornado,
     with_measured_speed,
 )
-from aedrover.capstone.figures import fmea_plot, queue_plot, sensitivity_plot  # noqa: E402
+from aedrover.capstone.figures import fmea_plot, queue_plot, sensitivity_compact, sensitivity_plot  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 SWEEP_INPUT = "ohca_incidence_per_100k_yr"      # the most uncertain input: no verified national value
@@ -59,7 +59,7 @@ def main(trials_csv: Path | None = None, out_dir: Path | None = None) -> dict:
     x = with_measured_speed(Inputs(), trials)
     res = evaluate(x)
     base = getattr(x, SWEEP_INPUT)
-    grid = [base * f for f in _geom(0.5, 400.0, 60)]
+    grid = [base * f for f in _geom(0.5, 3000.0, 90)]
     sw = sweep(x, SWEEP_INPUT, grid)
     be = {
         "kappa=1 (cost parity)": break_even(x, SWEEP_INPUT, "kappa", 1.0, lo=base, hi=base * 1e4),
@@ -79,6 +79,7 @@ def main(trials_csv: Path | None = None, out_dir: Path | None = None) -> dict:
     tor.to_csv(out / "roi_tornado.csv", index=False, float_format="%.6g")
     fm.to_csv(out / "fmea.csv", index=False, float_format="%.6g")
     sensitivity_plot(sw, SWEEP_INPUT, base, be, figs / "business_sensitivity.png")
+    sensitivity_compact(sw, SWEEP_INPUT, base, be, figs / "business_sensitivity_compact.png")
     queue_plot(res["lambda_per_hub_h"], res["mu_per_h"], figs / "business_queue.png")
     fmea_plot(fm, figs / "business_fmea.png")
 

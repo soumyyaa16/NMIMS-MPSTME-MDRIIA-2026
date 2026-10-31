@@ -1,10 +1,12 @@
-# AI audit: evidence candidates for dossier section 5.1
+# AI audit: evidence for dossier section 5.1
 
 Section 5.1 asks each group for **three cases where an AI tool gave wrong robotics or economic data**, how the group
-caught each one and what was actually true. Only the group knows which tool it used and what it was told, so this file
-does **not** fill the dossier. It lists discrepancies that were found while reconciling the starter pack with primary
-sources, each with the evidence needed to defend it in the viva. Use a case only if your group really met it; replace
-the tool, the prompt and the "how we caught it" with your own account.
+caught each one and what was actually true. **Part B** (below) holds the three cases written into the dossier: errors made by
+the AI assistant (Claude) while building this repository, each caught by checking. **Part A** lists discrepancies found in the
+course starter pack; the starter pack is not an AI tool the team used, so they are supporting evidence about verifying sources,
+not dossier cases. Replace any detail with your own account if it differs from what you experienced.
+
+## Part A: discrepancies in the course starter pack
 
 | # | What the starter material said | What the primary source or the code shows | Error type (dossier list) | How to verify it yourself |
 |---|---|---|---|---|
@@ -16,3 +18,17 @@ the tool, the prompt and the "how we caught it" with your own account.
 
 If you used an AI tool for any part of this repository's code or text, log it in dossier 5.1 and in the share-of-writing
 question in Section 6 even if it is not one of the three error cases.
+
+## Part B: cases from building this repository (AI tool: Claude)
+
+These three are events of this repository's own history, written into dossier section 5.1 as AI-01 to AI-03. Unlike the table above, whose
+errors come from the course starter pack (not from an AI tool the team used), these are errors made by the AI assistant while building the
+project and caught by checking.
+
+| # | What the AI did | What was true | How it was caught | Error type |
+|---|---|---|---|---|
+| AI-01 | Built the controller on the course vehicle (30 kN/m tyre) with a kerb-speed table measured for a 196 kN/m tyre | The course tyre needs its own table; measured with `experiments/02_curb_traversability.py --design course` | Traced why runs stalled at the kerb lip; payload shock above 3 g fell from 7.6 % to 3.6 % of runs | Wrong physics / equation |
+| AI-02 | First health model compared the pod with the median ambulance only, so the survival gain was exactly zero | The pod is dispatched with the ambulance: expected gain over the whole response-time distribution is +2.3 points | Noticed the exact zero, recomputed with the Naess distribution and the Larsen model | Wrong economics / cost logic |
+| AI-03 | First dossier box-plot showed only the lane-splitting condition while the text quoted pooled means | Pooled protocol conditions, n = 68 vs 116, as in `capstone_statistics.csv` | Checked each figure against the statistics table before the video | Wrong number or statistic |
+
+Use them in the viva only as events you can explain: ask what the symptom was, what check exposed it, and what the corrected value is.

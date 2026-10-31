@@ -247,17 +247,17 @@ def occurrence_score(rate: float) -> int:
 
 # Severity and detection (pre, post) are engineering judgement. Detection only changes where the mitigation adds a way to see the failure\n# (the safety filter logs every intervention); a prevention measure changes occurrence, which comes from the Monte Carlo.
 FMEA_MODES = [
-    {"mode": "Pedestrian or obstacle collision", "effect": "Injury to a bystander, mission abort, loss of trust",
-     "S": 9, "D": (6, 3), "pre": ("baseline_unshielded", "collision"), "post": ("proposed", "collision"),
-     "mitigation": "CBF-style speed-and-separation safety filter on the swept footprint; DWA plans against predicted pedestrian motion",
+    {"mode": "Wheel slip or entrapment on a wet kerb", "effect": "Late arrival or stranded pod: delayed first shock",
+     "S": 8, "D": (5, 5), "pre": ("baseline_fast", "not_success_slippery"), "post": ("proposed", "not_success_slippery"),
+     "mitigation": "Climb speed from the kerb table at a conservative friction belief; planner replans around the obstruction",
      "shown_in": "Both"},
     {"mode": "Payload shock above 3 g", "effect": "AED capacitor or electrodes damaged, device unusable at the scene",
      "S": 9, "D": (5, 5), "pre": ("baseline_fast", "shock_over_3g"), "post": ("proposed", "shock_over_3g"),
      "mitigation": "FSM CURB_SIDEWALK speed cap from the measured kerb table and a dynamic-window planner that slows for the kerb",
      "shown_in": "Both"},
-    {"mode": "Wheel slip or entrapment on a wet kerb", "effect": "Late arrival or stranded pod: delayed first shock",
-     "S": 8, "D": (5, 5), "pre": ("baseline_fast", "not_success_slippery"), "post": ("proposed", "not_success_slippery"),
-     "mitigation": "Climb speed from the kerb table at a conservative friction belief; planner replans around the obstruction",
+    {"mode": "Pedestrian or obstacle collision", "effect": "Injury to a bystander, mission abort, loss of trust",
+     "S": 9, "D": (6, 3), "pre": ("baseline_unshielded", "collision"), "post": ("proposed", "collision"),
+     "mitigation": "CBF-style speed-and-separation safety filter on the swept footprint; DWA plans against predicted pedestrian motion",
      "shown_in": "Both"},
     {"mode": "Stall: no forward progress for 15 s", "effect": "Mission aborted; ambulance remains the only response",
      "S": 7, "D": (4, 4), "pre": ("baseline_fast", "stall"), "post": ("proposed", "stall"),

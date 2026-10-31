@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+build/
+dist/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Large or regenerable artifacts (small summaries under results/ ARE committed)
+artifacts/
+runs/
+checkpoints/
+*.zip
+*.pt
+*.npz
+*.mp4
+!assets/*.mp4
+!models/**/*.zip
+tmp/
+.cache/
+
+
+# run logs
+results/_*.log
+
+# draft GIFs are large; only the compact README hero GIF is committed
+assets/*.gif
+!assets/hero.gif
+results/_*.log

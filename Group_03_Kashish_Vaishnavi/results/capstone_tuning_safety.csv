@@ -1,0 +1,401 @@
+config,condition,seed,outcome,success,over3g,peak_g,time_s
+safety: default,lane_splitting,60000,stall,0,0,2.1364,30.76
+safety: default,lane_splitting,60001,goal,1,0,1.5573,23.72
+safety: default,lane_splitting,60002,stall,0,0,1.034,28.98
+safety: default,lane_splitting,60003,goal,1,0,2.0805,33.28
+safety: default,lane_splitting,60004,goal,1,0,1.8735,29.9
+safety: default,lane_splitting,60005,collision,0,0,1.1064,7.38
+safety: default,lane_splitting,60006,stall,0,0,1.9239,27.68
+safety: default,lane_splitting,60007,goal,1,1,3.0442,34.44
+safety: default,lane_splitting,60008,collision,0,0,1.0208,10.26
+safety: default,lane_splitting,60009,goal,1,0,2.8505,37.74
+safety: default,lane_splitting,60010,goal,1,0,1.9101,29.24
+safety: default,lane_splitting,60011,collision,0,0,2.2247,27.46
+safety: default,lane_splitting,60012,goal,1,0,2.0288,24.48
+safety: default,lane_splitting,60013,goal,1,0,1.7751,29.52
+safety: default,lane_splitting,60014,collision,0,0,0.71312,2.88
+safety: default,lane_splitting,60015,stall,0,0,1.3492,39.76
+safety: default,lane_splitting,60016,goal,1,0,1.9448,38.4
+safety: default,lane_splitting,60017,off_sidewalk,0,0,1.8513,32.6
+safety: default,lane_splitting,60018,stall,0,0,1.3507,24
+safety: default,lane_splitting,60019,stall,0,0,1.1801,32.64
+safety: default,slippery,61000,stall,0,0,2.815,33.28
+safety: default,slippery,61001,goal,1,0,1.4028,46.52
+safety: default,slippery,61002,stall,0,0,0.86818,31.54
+safety: default,slippery,61003,goal,1,0,1.194,36
+safety: default,slippery,61004,stall,0,0,0.52932,30
+safety: default,slippery,61005,collision,0,0,0.67755,9.5
+safety: default,slippery,61006,goal,1,0,2.5166,26.4
+safety: default,slippery,61007,collision,0,0,0.82213,6.74
+safety: default,slippery,61008,stall,0,0,1.0759,31.42
+safety: default,slippery,61009,goal,1,0,2.4406,22.5
+safety: default,slippery,61010,goal,1,0,0.99614,39.76
+safety: default,slippery,61011,stall,0,0,0.90655,29.68
+safety: default,slippery,61012,collision,0,0,0.86542,16.1
+safety: default,slippery,61013,goal,1,0,1.5837,35.26
+safety: default,slippery,61014,stall,0,0,1.4008,49.92
+safety: default,slippery,61015,goal,1,0,1.5196,22.32
+safety: default,slippery,61016,off_sidewalk,0,0,1.1079,30.52
+safety: default,slippery,61017,collision,0,0,0.65556,3.92
+safety: default,slippery,61018,stall,0,0,2.6996,33.74
+safety: default,slippery,61019,stall,0,0,1.8907,32.88
+safety: default,kerb,62000,goal,1,0,2.0248,18.7
+safety: default,kerb,62001,goal,1,0,1.6794,19.48
+safety: default,kerb,62002,goal,1,0,2.3385,17.46
+safety: default,kerb,62003,goal,1,1,3.8832,17.06
+safety: default,kerb,62004,goal,1,0,2.3465,17.58
+safety: default,kerb,62005,goal,1,0,1.6288,19.84
+safety: default,kerb,62006,goal,1,0,2.5808,17.56
+safety: default,kerb,62007,goal,1,0,2.1133,17.76
+safety: default,kerb,62008,goal,1,1,3.5867,17.3
+safety: default,kerb,62009,goal,1,0,1.7591,17.36
+safety: default,kerb,62010,goal,1,0,1.4057,20.28
+safety: default,kerb,62011,goal,1,1,3.9229,17.24
+safety: default,kerb,62012,goal,1,0,2.0691,18.38
+safety: default,kerb,62013,goal,1,0,1.9282,18.66
+safety: default,kerb,62014,goal,1,0,1.5291,17.4
+safety: default,kerb,62015,goal,1,0,1.1487,18.72
+safety: default,kerb,62016,goal,1,0,2.3991,17.86
+safety: default,kerb,62017,goal,1,1,3.3984,17.36
+safety: default,kerb,62018,goal,1,0,1.7384,19.4
+safety: default,kerb,62019,goal,1,0,1.6682,20.34
+safety: default,crowd,63000,goal,1,0,0.89869,16.06
+safety: default,crowd,63001,stall,0,0,1.1663,22.2
+safety: default,crowd,63002,goal,1,0,1.2115,26.58
+safety: default,crowd,63003,goal,1,0,1.0054,26.48
+safety: default,crowd,63004,goal,1,0,1.0098,16.28
+safety: default,crowd,63005,goal,1,0,1.038,23.86
+safety: default,crowd,63006,goal,1,0,1.09,22.74
+safety: default,crowd,63007,goal,1,0,1.3801,38.62
+safety: default,crowd,63008,goal,1,0,1.1029,24.5
+safety: default,crowd,63009,goal,1,0,1.0135,23.56
+safety: default,crowd,63010,goal,1,0,1.4414,23.54
+safety: default,crowd,63011,goal,1,0,1.1743,35.32
+safety: default,crowd,63012,goal,1,0,1.1541,27.08
+safety: default,crowd,63013,goal,1,0,0.8836,24.12
+safety: default,crowd,63014,goal,1,0,1.3729,34.72
+safety: default,crowd,63015,goal,1,0,1.1797,19.98
+safety: default,crowd,63016,stall,0,0,1.0401,30.52
+safety: default,crowd,63017,goal,1,0,1.2724,26.6
+safety: default,crowd,63018,goal,1,0,1.1258,21.12
+safety: default,crowd,63019,stall,0,0,1.2813,25.96
+safety: t_react 0.05 s,lane_splitting,60000,stall,0,0,2.1364,30.76
+safety: t_react 0.05 s,lane_splitting,60001,goal,1,0,1.5573,23.72
+safety: t_react 0.05 s,lane_splitting,60002,stall,0,0,1.034,28.98
+safety: t_react 0.05 s,lane_splitting,60003,goal,1,0,2.0805,33.28
+safety: t_react 0.05 s,lane_splitting,60004,goal,1,0,1.827,29.88
+safety: t_react 0.05 s,lane_splitting,60005,collision,0,0,1.1064,7.38
+safety: t_react 0.05 s,lane_splitting,60006,stall,0,0,1.9239,27.68
+safety: t_react 0.05 s,lane_splitting,60007,stall,0,1,3.1848,58.78
+safety: t_react 0.05 s,lane_splitting,60008,stall,0,0,1.7286,24.5
+safety: t_react 0.05 s,lane_splitting,60009,goal,1,0,2.7563,37.76
+safety: t_react 0.05 s,lane_splitting,60010,goal,1,0,1.9101,29.24
+safety: t_react 0.05 s,lane_splitting,60011,collision,0,0,2.2247,27.4
+safety: t_react 0.05 s,lane_splitting,60012,goal,1,0,2.0288,24.48
+safety: t_react 0.05 s,lane_splitting,60013,goal,1,0,1.7751,29.52
+safety: t_react 0.05 s,lane_splitting,60014,collision,0,0,0.71312,2.88
+safety: t_react 0.05 s,lane_splitting,60015,stall,0,0,1.3492,39.76
+safety: t_react 0.05 s,lane_splitting,60016,goal,1,0,1.8953,39.7
+safety: t_react 0.05 s,lane_splitting,60017,off_sidewalk,0,0,1.8513,32.6
+safety: t_react 0.05 s,lane_splitting,60018,stall,0,0,1.3507,24.02
+safety: t_react 0.05 s,lane_splitting,60019,stall,0,0,1.2064,31.78
+safety: t_react 0.05 s,slippery,61000,stall,0,0,2.815,33.28
+safety: t_react 0.05 s,slippery,61001,goal,1,0,1.4028,46
+safety: t_react 0.05 s,slippery,61002,stall,0,0,0.86841,31.72
+safety: t_react 0.05 s,slippery,61003,goal,1,0,1.194,36
+safety: t_react 0.05 s,slippery,61004,stall,0,0,0.52932,29.98
+safety: t_react 0.05 s,slippery,61005,collision,0,0,0.67755,9.5
+safety: t_react 0.05 s,slippery,61006,goal,1,0,2.5166,26.32
+safety: t_react 0.05 s,slippery,61007,collision,0,0,0.82216,6.56
+safety: t_react 0.05 s,slippery,61008,collision,0,0,1.9759,43.02
+safety: t_react 0.05 s,slippery,61009,stall,0,0,2.441,31.24
+safety: t_react 0.05 s,slippery,61010,goal,1,0,0.99614,39.76
+safety: t_react 0.05 s,slippery,61011,stall,0,0,0.92769,29.56
+safety: t_react 0.05 s,slippery,61012,goal,1,0,1.0899,35.68
+safety: t_react 0.05 s,slippery,61013,goal,1,0,1.5837,35.26
+safety: t_react 0.05 s,slippery,61014,stall,0,0,1.4008,49.86
+safety: t_react 0.05 s,slippery,61015,goal,1,0,1.5196,22.32
+safety: t_react 0.05 s,slippery,61016,stall,0,0,0.97516,48.74
+safety: t_react 0.05 s,slippery,61017,collision,0,0,0.65558,3.92
+safety: t_react 0.05 s,slippery,61018,stall,0,0,2.6996,33.74
+safety: t_react 0.05 s,slippery,61019,stall,0,0,1.9304,32.92
+safety: t_react 0.05 s,kerb,62000,goal,1,0,2.0248,18.7
+safety: t_react 0.05 s,kerb,62001,goal,1,0,1.6794,19.48
+safety: t_react 0.05 s,kerb,62002,goal,1,0,2.3385,17.46
+safety: t_react 0.05 s,kerb,62003,goal,1,1,3.8832,17.06
+safety: t_react 0.05 s,kerb,62004,goal,1,0,2.3465,17.58
+safety: t_react 0.05 s,kerb,62005,goal,1,0,1.6288,19.84
+safety: t_react 0.05 s,kerb,62006,goal,1,0,2.5808,17.56
+safety: t_react 0.05 s,kerb,62007,goal,1,0,2.1133,17.76
+safety: t_react 0.05 s,kerb,62008,goal,1,1,3.5867,17.3
+safety: t_react 0.05 s,kerb,62009,goal,1,0,1.7591,17.36
+safety: t_react 0.05 s,kerb,62010,goal,1,0,1.4057,20.28
+safety: t_react 0.05 s,kerb,62011,goal,1,1,3.9229,17.24
+safety: t_react 0.05 s,kerb,62012,goal,1,0,2.0691,18.38
+safety: t_react 0.05 s,kerb,62013,goal,1,0,1.9282,18.66
+safety: t_react 0.05 s,kerb,62014,goal,1,0,1.5291,17.4
+safety: t_react 0.05 s,kerb,62015,goal,1,0,1.1487,18.72
+safety: t_react 0.05 s,kerb,62016,goal,1,0,2.3991,17.86
+safety: t_react 0.05 s,kerb,62017,goal,1,1,3.3984,17.36
+safety: t_react 0.05 s,kerb,62018,goal,1,0,1.7384,19.4
+safety: t_react 0.05 s,kerb,62019,goal,1,0,1.6682,20.34
+safety: t_react 0.05 s,crowd,63000,goal,1,0,0.89869,16.06
+safety: t_react 0.05 s,crowd,63001,goal,1,0,1.1866,23.22
+safety: t_react 0.05 s,crowd,63002,goal,1,0,1.2115,26.58
+safety: t_react 0.05 s,crowd,63003,goal,1,0,1.0054,23.76
+safety: t_react 0.05 s,crowd,63004,goal,1,0,1.0098,16.28
+safety: t_react 0.05 s,crowd,63005,goal,1,0,1.038,23.86
+safety: t_react 0.05 s,crowd,63006,goal,1,0,1.09,22.74
+safety: t_react 0.05 s,crowd,63007,goal,1,0,1.1808,27.44
+safety: t_react 0.05 s,crowd,63008,goal,1,0,1.1029,24.48
+safety: t_react 0.05 s,crowd,63009,goal,1,0,1.0135,21.94
+safety: t_react 0.05 s,crowd,63010,goal,1,0,1.4414,23.54
+safety: t_react 0.05 s,crowd,63011,goal,1,0,1.1743,35.34
+safety: t_react 0.05 s,crowd,63012,goal,1,0,0.9542,29.26
+safety: t_react 0.05 s,crowd,63013,goal,1,0,0.8828,24.1
+safety: t_react 0.05 s,crowd,63014,goal,1,0,1.0882,30.82
+safety: t_react 0.05 s,crowd,63015,goal,1,0,1.1797,19.98
+safety: t_react 0.05 s,crowd,63016,goal,1,0,1.4843,34.42
+safety: t_react 0.05 s,crowd,63017,goal,1,0,1.2724,33.82
+safety: t_react 0.05 s,crowd,63018,goal,1,0,1.1258,20.96
+safety: t_react 0.05 s,crowd,63019,stall,0,0,1.1939,25.96
+safety: ped cap 0.8 m/s,lane_splitting,60000,stall,0,0,2.1364,30.76
+safety: ped cap 0.8 m/s,lane_splitting,60001,goal,1,0,1.5573,27.78
+safety: ped cap 0.8 m/s,lane_splitting,60002,stall,0,0,1.034,28.98
+safety: ped cap 0.8 m/s,lane_splitting,60003,off_sidewalk,0,0,1.4728,14.04
+safety: ped cap 0.8 m/s,lane_splitting,60004,goal,1,0,1.7711,33.08
+safety: ped cap 0.8 m/s,lane_splitting,60005,collision,0,0,0.94187,7.44
+safety: ped cap 0.8 m/s,lane_splitting,60006,stall,0,0,1.9239,27.68
+safety: ped cap 0.8 m/s,lane_splitting,60007,stall,0,0,1.7644,38.08
+safety: ped cap 0.8 m/s,lane_splitting,60008,collision,0,0,1.0208,10.26
+safety: ped cap 0.8 m/s,lane_splitting,60009,off_sidewalk,0,0,1.8305,17.08
+safety: ped cap 0.8 m/s,lane_splitting,60010,goal,1,0,1.9101,29.24
+safety: ped cap 0.8 m/s,lane_splitting,60011,collision,0,0,2.2247,27.48
+safety: ped cap 0.8 m/s,lane_splitting,60012,goal,1,0,2.2468,33.16
+safety: ped cap 0.8 m/s,lane_splitting,60013,goal,1,0,1.7751,30.26
+safety: ped cap 0.8 m/s,lane_splitting,60014,collision,0,0,0.71312,2.88
+safety: ped cap 0.8 m/s,lane_splitting,60015,stall,0,0,1.3492,39.76
+safety: ped cap 0.8 m/s,lane_splitting,60016,stall,0,0,1.9101,40.26
+safety: ped cap 0.8 m/s,lane_splitting,60017,off_sidewalk,0,0,1.2649,10.96
+safety: ped cap 0.8 m/s,lane_splitting,60018,stall,0,0,1.3507,24.04
+safety: ped cap 0.8 m/s,lane_splitting,60019,off_sidewalk,0,0,1.3654,11.98
+safety: ped cap 0.8 m/s,slippery,61000,off_sidewalk,0,0,0.99042,12.38
+safety: ped cap 0.8 m/s,slippery,61001,goal,1,0,1.4028,41.34
+safety: ped cap 0.8 m/s,slippery,61002,stall,0,0,0.86818,31.54
+safety: ped cap 0.8 m/s,slippery,61003,goal,1,0,1.2682,35.82
+safety: ped cap 0.8 m/s,slippery,61004,stall,0,0,0.52932,30.12
+safety: ped cap 0.8 m/s,slippery,61005,collision,0,0,0.67755,9.52
+safety: ped cap 0.8 m/s,slippery,61006,goal,1,0,2.5166,34.3
+safety: ped cap 0.8 m/s,slippery,61007,collision,0,0,0.79053,9.02
+safety: ped cap 0.8 m/s,slippery,61008,collision,0,0,1.0685,19.74
+safety: ped cap 0.8 m/s,slippery,61009,off_sidewalk,0,0,1.1656,5.08
+safety: ped cap 0.8 m/s,slippery,61010,goal,1,0,0.99614,43.06
+safety: ped cap 0.8 m/s,slippery,61011,stall,0,0,0.90655,29.68
+safety: ped cap 0.8 m/s,slippery,61012,stall,0,0,0.86542,23.58
+safety: ped cap 0.8 m/s,slippery,61013,goal,1,0,1.5837,37.98
+safety: ped cap 0.8 m/s,slippery,61014,stall,0,0,1.4008,48.74
+safety: ped cap 0.8 m/s,slippery,61015,collision,0,0,1.5373,21.18
+safety: ped cap 0.8 m/s,slippery,61016,off_sidewalk,0,0,1.1088,6.92
+safety: ped cap 0.8 m/s,slippery,61017,collision,0,0,0.65556,3.92
+safety: ped cap 0.8 m/s,slippery,61018,stall,0,0,2.6996,33.74
+safety: ped cap 0.8 m/s,slippery,61019,stall,0,0,1.771,36.64
+safety: ped cap 0.8 m/s,kerb,62000,goal,1,0,2.0248,18.7
+safety: ped cap 0.8 m/s,kerb,62001,goal,1,0,1.6794,19.48
+safety: ped cap 0.8 m/s,kerb,62002,goal,1,0,2.3385,17.46
+safety: ped cap 0.8 m/s,kerb,62003,goal,1,1,3.8832,17.06
+safety: ped cap 0.8 m/s,kerb,62004,goal,1,0,2.3465,17.58
+safety: ped cap 0.8 m/s,kerb,62005,goal,1,0,1.6288,19.84
+safety: ped cap 0.8 m/s,kerb,62006,goal,1,0,2.5808,17.56
+safety: ped cap 0.8 m/s,kerb,62007,goal,1,0,2.1133,17.76
+safety: ped cap 0.8 m/s,kerb,62008,goal,1,1,3.5867,17.3
+safety: ped cap 0.8 m/s,kerb,62009,goal,1,0,1.7591,17.36
+safety: ped cap 0.8 m/s,kerb,62010,goal,1,0,1.4057,20.28
+safety: ped cap 0.8 m/s,kerb,62011,goal,1,1,3.9229,17.24
+safety: ped cap 0.8 m/s,kerb,62012,goal,1,0,2.0691,18.38
+safety: ped cap 0.8 m/s,kerb,62013,goal,1,0,1.9282,18.66
+safety: ped cap 0.8 m/s,kerb,62014,goal,1,0,1.5291,17.4
+safety: ped cap 0.8 m/s,kerb,62015,goal,1,0,1.1487,18.72
+safety: ped cap 0.8 m/s,kerb,62016,goal,1,0,2.3991,17.86
+safety: ped cap 0.8 m/s,kerb,62017,goal,1,1,3.3984,17.36
+safety: ped cap 0.8 m/s,kerb,62018,goal,1,0,1.7384,19.4
+safety: ped cap 0.8 m/s,kerb,62019,goal,1,0,1.6682,20.34
+safety: ped cap 0.8 m/s,crowd,63000,goal,1,0,1.0144,16.98
+safety: ped cap 0.8 m/s,crowd,63001,goal,1,0,1.0592,43.02
+safety: ped cap 0.8 m/s,crowd,63002,goal,1,0,1.2115,41.06
+safety: ped cap 0.8 m/s,crowd,63003,goal,1,0,1.0169,23.9
+safety: ped cap 0.8 m/s,crowd,63004,goal,1,0,1.0098,17.14
+safety: ped cap 0.8 m/s,crowd,63005,goal,1,0,1.038,23.86
+safety: ped cap 0.8 m/s,crowd,63006,goal,1,0,1.1883,27.16
+safety: ped cap 0.8 m/s,crowd,63007,goal,1,0,1.1808,20.2
+safety: ped cap 0.8 m/s,crowd,63008,stall,0,0,1.1029,40.48
+safety: ped cap 0.8 m/s,crowd,63009,goal,1,0,1.0135,47.42
+safety: ped cap 0.8 m/s,crowd,63010,stall,0,0,1.4705,39.96
+safety: ped cap 0.8 m/s,crowd,63011,collision,0,0,1.1743,21.24
+safety: ped cap 0.8 m/s,crowd,63012,stall,0,0,1.0292,25.16
+safety: ped cap 0.8 m/s,crowd,63013,goal,1,0,1.1275,28.12
+safety: ped cap 0.8 m/s,crowd,63014,goal,1,0,1.1884,40.48
+safety: ped cap 0.8 m/s,crowd,63015,stall,0,0,1.1797,29.28
+safety: ped cap 0.8 m/s,crowd,63016,stall,0,0,1.4175,47.32
+safety: ped cap 0.8 m/s,crowd,63017,goal,1,0,1.2876,27.48
+safety: ped cap 0.8 m/s,crowd,63018,goal,1,0,1.0838,28.58
+safety: ped cap 0.8 m/s,crowd,63019,collision,0,0,1.1079,15.34
+safety: 0.5 m clearance,lane_splitting,60000,stall,0,0,1.0224,20.98
+safety: 0.5 m clearance,lane_splitting,60001,stall,0,0,1.5393,46.12
+safety: 0.5 m clearance,lane_splitting,60002,stall,0,0,1.1575,28.98
+safety: 0.5 m clearance,lane_splitting,60003,collision,0,0,0.97004,7.74
+safety: 0.5 m clearance,lane_splitting,60004,stall,0,0,1.8778,20.56
+safety: 0.5 m clearance,lane_splitting,60005,stall,0,0,2.1969,45.28
+safety: 0.5 m clearance,lane_splitting,60006,stall,0,0,0.62373,18.48
+safety: 0.5 m clearance,lane_splitting,60007,stall,0,0,1.7671,21.96
+safety: 0.5 m clearance,lane_splitting,60008,stall,0,0,0.98175,26.34
+safety: 0.5 m clearance,lane_splitting,60009,stall,0,0,1.1362,17.78
+safety: 0.5 m clearance,lane_splitting,60010,stall,0,0,1.1217,20.22
+safety: 0.5 m clearance,lane_splitting,60011,stall,0,0,2.2247,46.78
+safety: 0.5 m clearance,lane_splitting,60012,stall,0,0,1.3597,61.14
+safety: 0.5 m clearance,lane_splitting,60013,stall,0,0,0.75399,18.64
+safety: 0.5 m clearance,lane_splitting,60014,stall,0,0,0.66632,18.28
+safety: 0.5 m clearance,lane_splitting,60015,stall,0,0,1.3492,32.98
+safety: 0.5 m clearance,lane_splitting,60016,stall,0,0,1.0008,24.18
+safety: 0.5 m clearance,lane_splitting,60017,off_sidewalk,0,0,1.2241,21.26
+safety: 0.5 m clearance,lane_splitting,60018,stall,0,0,1.3507,23.32
+safety: 0.5 m clearance,lane_splitting,60019,stall,0,0,1.1371,30.06
+safety: 0.5 m clearance,slippery,61000,stall,0,0,0.7979,19.24
+safety: 0.5 m clearance,slippery,61001,stall,0,0,2.0964,70.16
+safety: 0.5 m clearance,slippery,61002,stall,0,0,0.85442,18.04
+safety: 0.5 m clearance,slippery,61003,stall,0,0,0.66234,20.76
+safety: 0.5 m clearance,slippery,61004,stall,0,0,0.52932,29.5
+safety: 0.5 m clearance,slippery,61005,stall,0,0,0.66749,22.26
+safety: 0.5 m clearance,slippery,61006,stall,0,0,2.5166,30.98
+safety: 0.5 m clearance,slippery,61007,stall,0,0,0.74343,26.18
+safety: 0.5 m clearance,slippery,61008,stall,0,0,1.068,40
+safety: 0.5 m clearance,slippery,61009,stall,0,0,2.5399,64.66
+safety: 0.5 m clearance,slippery,61010,stall,0,0,0.99614,35.52
+safety: 0.5 m clearance,slippery,61011,stall,0,0,0.84102,29.86
+safety: 0.5 m clearance,slippery,61012,stall,0,0,0.86542,30.36
+safety: 0.5 m clearance,slippery,61013,stall,0,0,1.5847,41.56
+safety: 0.5 m clearance,slippery,61014,stall,0,0,1.3764,45.58
+safety: 0.5 m clearance,slippery,61015,stall,0,0,1.4222,38.58
+safety: 0.5 m clearance,slippery,61016,stall,0,0,0.85949,49.8
+safety: 0.5 m clearance,slippery,61017,stall,0,0,0.65141,19.04
+safety: 0.5 m clearance,slippery,61018,stall,0,0,2.6996,33.86
+safety: 0.5 m clearance,slippery,61019,stall,0,0,1.7952,55.42
+safety: 0.5 m clearance,kerb,62000,goal,1,0,2.0248,18.7
+safety: 0.5 m clearance,kerb,62001,goal,1,0,1.6794,19.48
+safety: 0.5 m clearance,kerb,62002,goal,1,0,2.3385,17.46
+safety: 0.5 m clearance,kerb,62003,goal,1,1,3.8832,17.06
+safety: 0.5 m clearance,kerb,62004,goal,1,0,2.3465,17.58
+safety: 0.5 m clearance,kerb,62005,goal,1,0,1.6288,19.84
+safety: 0.5 m clearance,kerb,62006,goal,1,0,2.5808,17.56
+safety: 0.5 m clearance,kerb,62007,goal,1,0,2.1133,17.76
+safety: 0.5 m clearance,kerb,62008,goal,1,1,3.5867,17.3
+safety: 0.5 m clearance,kerb,62009,goal,1,0,1.7591,17.36
+safety: 0.5 m clearance,kerb,62010,goal,1,0,1.4057,20.28
+safety: 0.5 m clearance,kerb,62011,goal,1,1,3.9229,17.24
+safety: 0.5 m clearance,kerb,62012,goal,1,0,2.0691,18.38
+safety: 0.5 m clearance,kerb,62013,goal,1,0,1.9282,18.66
+safety: 0.5 m clearance,kerb,62014,goal,1,0,1.5291,17.4
+safety: 0.5 m clearance,kerb,62015,goal,1,0,1.1487,18.72
+safety: 0.5 m clearance,kerb,62016,goal,1,0,2.3991,17.86
+safety: 0.5 m clearance,kerb,62017,goal,1,1,3.3984,17.36
+safety: 0.5 m clearance,kerb,62018,goal,1,0,1.7384,19.4
+safety: 0.5 m clearance,kerb,62019,goal,1,0,1.6682,20.34
+safety: 0.5 m clearance,crowd,63000,stall,0,0,0.5582,17.78
+safety: 0.5 m clearance,crowd,63001,stall,0,0,1.0942,23.24
+safety: 0.5 m clearance,crowd,63002,stall,0,0,1.1035,47.62
+safety: 0.5 m clearance,crowd,63003,stall,0,0,0.851,19.04
+safety: 0.5 m clearance,crowd,63004,stall,0,0,1.0357,33.7
+safety: 0.5 m clearance,crowd,63005,stall,0,0,1.0918,29
+safety: 0.5 m clearance,crowd,63006,stall,0,0,0.98668,34.9
+safety: 0.5 m clearance,crowd,63007,collision,0,0,1.3769,9.3
+safety: 0.5 m clearance,crowd,63008,stall,0,0,1.1131,37.86
+safety: 0.5 m clearance,crowd,63009,stall,0,0,1.0826,59.32
+safety: 0.5 m clearance,crowd,63010,stall,0,0,1.4414,20.36
+safety: 0.5 m clearance,crowd,63011,stall,0,0,1.1743,24.88
+safety: 0.5 m clearance,crowd,63012,stall,0,0,0.92087,36.2
+safety: 0.5 m clearance,crowd,63013,stall,0,0,0.97602,41.34
+safety: 0.5 m clearance,crowd,63014,stall,0,0,1.0877,20.56
+safety: 0.5 m clearance,crowd,63015,collision,0,0,1.1882,7.94
+safety: 0.5 m clearance,crowd,63016,stall,0,0,1.1145,38.74
+safety: 0.5 m clearance,crowd,63017,stall,0,0,1.4761,20.72
+safety: 0.5 m clearance,crowd,63018,stall,0,0,0.74227,18.66
+safety: 0.5 m clearance,crowd,63019,stall,0,0,1.1572,25.36
+safety: all three,lane_splitting,60000,stall,0,0,1.0211,20.94
+safety: all three,lane_splitting,60001,stall,0,0,1.9846,46.5
+safety: all three,lane_splitting,60002,stall,0,0,1.1575,28.98
+safety: all three,lane_splitting,60003,collision,0,0,0.97004,7.74
+safety: all three,lane_splitting,60004,stall,0,0,1.3109,20.72
+safety: all three,lane_splitting,60005,stall,0,0,2.2056,43.22
+safety: all three,lane_splitting,60006,stall,0,0,0.65276,17.8
+safety: all three,lane_splitting,60007,stall,0,0,1.7374,22.02
+safety: all three,lane_splitting,60008,stall,0,0,0.98219,25.88
+safety: all three,lane_splitting,60009,stall,0,0,1.1362,17.78
+safety: all three,lane_splitting,60010,stall,0,0,1.0393,20.3
+safety: all three,lane_splitting,60011,stall,0,0,2.2247,46.34
+safety: all three,lane_splitting,60012,stall,0,0,0.96908,61.4
+safety: all three,lane_splitting,60013,stall,0,0,0.75395,18
+safety: all three,lane_splitting,60014,stall,0,0,0.70099,18.18
+safety: all three,lane_splitting,60015,stall,0,0,1.3492,32.98
+safety: all three,lane_splitting,60016,stall,0,0,1.0008,24.38
+safety: all three,lane_splitting,60017,off_sidewalk,0,0,1.0301,22.64
+safety: all three,lane_splitting,60018,stall,0,0,1.3507,23.46
+safety: all three,lane_splitting,60019,stall,0,0,1.1158,30.1
+safety: all three,slippery,61000,stall,0,0,0.71624,19.74
+safety: all three,slippery,61001,stall,0,0,1.3022,36
+safety: all three,slippery,61002,stall,0,0,0.85312,17.98
+safety: all three,slippery,61003,stall,0,0,0.81509,21.18
+safety: all three,slippery,61004,stall,0,0,0.52932,29.48
+safety: all three,slippery,61005,stall,0,0,0.74785,22.32
+safety: all three,slippery,61006,stall,0,0,2.5166,30.98
+safety: all three,slippery,61007,stall,0,0,0.80492,26.08
+safety: all three,slippery,61008,stall,0,0,0.94342,39.16
+safety: all three,slippery,61009,stall,0,0,2.2742,57.8
+safety: all three,slippery,61010,stall,0,0,0.99614,35.52
+safety: all three,slippery,61011,stall,0,0,0.83779,29.8
+safety: all three,slippery,61012,stall,0,0,0.86542,31.5
+safety: all three,slippery,61013,stall,0,0,1.5776,41.34
+safety: all three,slippery,61014,stall,0,0,1.4603,43.44
+safety: all three,slippery,61015,stall,0,0,1.3976,38.72
+safety: all three,slippery,61016,stall,0,0,0.93408,47.96
+safety: all three,slippery,61017,stall,0,0,0.63394,18.98
+safety: all three,slippery,61018,stall,0,0,2.6996,33.8
+safety: all three,slippery,61019,stall,0,0,1.8685,42.78
+safety: all three,kerb,62000,goal,1,0,2.0248,18.7
+safety: all three,kerb,62001,goal,1,0,1.6794,19.48
+safety: all three,kerb,62002,goal,1,0,2.3385,17.46
+safety: all three,kerb,62003,goal,1,1,3.8832,17.06
+safety: all three,kerb,62004,goal,1,0,2.3465,17.58
+safety: all three,kerb,62005,goal,1,0,1.6288,19.84
+safety: all three,kerb,62006,goal,1,0,2.5808,17.56
+safety: all three,kerb,62007,goal,1,0,2.1133,17.76
+safety: all three,kerb,62008,goal,1,1,3.5867,17.3
+safety: all three,kerb,62009,goal,1,0,1.7591,17.36
+safety: all three,kerb,62010,goal,1,0,1.4057,20.28
+safety: all three,kerb,62011,goal,1,1,3.9229,17.24
+safety: all three,kerb,62012,goal,1,0,2.0691,18.38
+safety: all three,kerb,62013,goal,1,0,1.9282,18.66
+safety: all three,kerb,62014,goal,1,0,1.5291,17.4
+safety: all three,kerb,62015,goal,1,0,1.1487,18.72
+safety: all three,kerb,62016,goal,1,0,2.3991,17.86
+safety: all three,kerb,62017,goal,1,1,3.3984,17.36
+safety: all three,kerb,62018,goal,1,0,1.7384,19.4
+safety: all three,kerb,62019,goal,1,0,1.6682,20.34
+safety: all three,crowd,63000,stall,0,0,0.64653,17.68
+safety: all three,crowd,63001,stall,0,0,1.0844,23.46
+safety: all three,crowd,63002,stall,0,0,1.075,32.8
+safety: all three,crowd,63003,stall,0,0,0.85099,18.98
+safety: all three,crowd,63004,goal,1,0,1.0278,21.68
+safety: all three,crowd,63005,stall,0,0,1.178,28.98
+safety: all three,crowd,63006,stall,0,0,0.97268,34.34
+safety: all three,crowd,63007,goal,1,0,1.3306,37.24
+safety: all three,crowd,63008,stall,0,0,1.0704,22.16
+safety: all three,crowd,63009,stall,0,0,1.058,48.86
+safety: all three,crowd,63010,stall,0,0,1.4414,20.38
+safety: all three,crowd,63011,stall,0,0,1.1743,24.88
+safety: all three,crowd,63012,stall,0,0,0.93389,39.34
+safety: all three,crowd,63013,stall,0,0,1.0948,41.34
+safety: all three,crowd,63014,stall,0,0,1.0877,20.56
+safety: all three,crowd,63015,collision,0,0,1.1586,7.96
+safety: all three,crowd,63016,stall,0,0,1.2097,39.02
+safety: all three,crowd,63017,stall,0,0,1.2823,44.18
+safety: all three,crowd,63018,stall,0,0,0.74184,18.54
+safety: all three,crowd,63019,stall,0,0,1.158,26.26
