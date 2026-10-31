@@ -65,9 +65,9 @@ For the exhaustive literature analysis, mathematical derivations, and viva defen
 
 ## 4. Project Demonstration & Academic Showcase (LinkedIn)
 
-[![Watch Video Demonstration on LinkedIn](docs/figures/video_poster.png)](https://www.linkedin.com/)
+[![Watch Video Demonstration on LinkedIn](docs/figures/video_poster.png)](https://lnkd.in/p/d6ZwW_uJ)
 
-* **Video Demonstration:** [Watch 60-Second Walkthrough on LinkedIn](https://www.linkedin.com/) *(Click thumbnail above to open LinkedIn post)*
+* **Video Demonstration:** [Watch 60-Second Walkthrough on LinkedIn](https://lnkd.in/p/d6ZwW_uJ) *(Click thumbnail above to open LinkedIn post)*
 * **Student Presenters:** **Muaaz Mohammed Iqbal Shaikh (E043)**, **Aditya Rajkumar (E051)**, **Zaid Rezaur Rahman (E075)**, **Soumya Subhankar Ranasingh (E077)**
 * **Academic Institutional Tags:** SVKM's NMIMS MPSTME | Academic Directorate | Industry 4.0 Robotics
 * **Submission Protocol:** Record a 60–90 second demonstration of your MuJoCo simulation and telemetry. Publish on LinkedIn tagging MPSTME, Dean, and Course Faculty. Insert your live post URL in `docs/TEAM_ROSTER.json` under `"linkedin_url"`, and submit a pull request to update this project dossier and the cohort dashboard.
