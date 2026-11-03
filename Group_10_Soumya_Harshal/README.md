@@ -21,7 +21,7 @@
 ---
 
 ## Contents
-[Highlights](#highlights) · [Why it matters](#why-it-matters) · [System](#system) · [Mathematics](#the-mathematics) · [Results](#results) · [Business case](#business-case-csbs) · [Engineering lessons](#engineering-lessons) · [Limitations](#limitations) · [Run it](#run-it) · [Repository map](#repository-map) · [References](#key-references)
+[Highlights](#highlights) · [Why it matters](#why-it-matters) · [System](#system) · [Mathematics](#the-mathematics) · [Physics](#physics-behind-the-design) · [Results](#results) · [Business case](#business-case-csbs) · [Engineering lessons](#engineering-lessons) · [Limitations](#limitations) · [Run it](#run-it) · [Repository map](#repository-map) · [References](#key-references)
 
 ---
 
@@ -117,6 +117,22 @@ $$F = k_s\cdot 15\,d + 3\,v$$
 $$B = N\cdot NCRI + \Delta N\cdot m,\qquad P=\frac{T_{payback}}{T_{life}}$$
 
 N = 21.33 cases/yr, NCRI = −0.1023, ΔN = 9.07 cases/yr, margin m = 0.5 (assumption), T_life = 7 yr. At 21 cases/yr, T_payback = 211.4 months and P = 2.52; P crosses 1 near 54 cases/yr.
+
+---
+
+## Physics behind the design
+
+**Why damping works (singular-value view).** Write J = UΣVᵀ. A plain pseudo-inverse turns a task-space error along singular direction *i* into joint motion of 1/σᵢ, which blows up as σᵢ → 0 near a singularity. Damped least squares minimises ‖JΔq − Δx‖² + λ²‖Δq‖² and replaces 1/σᵢ with σᵢ/(σᵢ² + λ²), whose maximum is 1/(2λ). With λ₀ = 0.08 that caps the joint-speed gain at about 6.25 per unit of task speed. For a 6-D task on a 7-joint arm, w = √det(JJᵀ) = σ₁σ₂…σ₆, which goes to zero at a singularity. Scheduling λ on w switches the damping on only near trouble, so accuracy is untouched elsewhere (λ = 10⁻³).
+
+**Redundancy.** Seven joints for a 6-D task leave a 1-D self-motion manifold. The projector (I − J⁺J) moves the elbow back toward a preferred posture without moving the needle tip.
+
+**Why a low-pass filter costs accuracy while moving.** An order-2 Butterworth has |H(f)| = 1/√(1 + (f/f_c)⁴). At f_c = 3.5 Hz the filter stage alone gives about −12.3 dB at 7 Hz, −18.3 dB at 10 Hz and −21.4 dB at 12 Hz. But its low-frequency group delay is τ ≈ √2 / (2π f_c) ≈ 64 ms, so a tip moving at speed v lags by v·τ. At an insertion speed of 12.8 mm/s (64 mm in 5 s) that is about 0.82 mm, which matches the 0.83 mm tracking error we measured for the fixed 3.5 Hz filter (a back-of-envelope consistency check, not a proof).
+
+**Why the plan-aware filter avoids that lag.** It filters only the deviation from the planned path. Planned motion passes through with no delay, while tremor, being a deviation, is attenuated. That is why its tracking error is better than baseline, not worse.
+
+**Learning objective.** PPO maximises the clipped surrogate L = E[min(ρₜÂₜ, clip(ρₜ, 1−ε, 1+ε)Âₜ)], with ρₜ = π_θ / π_old, using the reward in equation 6. Domain randomisation over hands and tissue stiffness keeps the policy from overfitting one tremor.
+
+**Error budget.** Tremor-induced hold error is 0.041–0.045 mm against a 1.06 mm whole-system error (about 4%). The learned filter removes 0.005–0.008 mm of it (0.5–0.8% of the total budget).
 
 ---
 
@@ -226,7 +242,7 @@ docs/figs/   result figures
 
 ## AI assistance
 
-Claude (Anthropic) assisted with code, analysis and documentation drafting. Results are reproducible from the scripts and logged CSVs. The AI audit log is in Section 5 of `docs/MDRIIA_Group_10_Technical_Dossier.docx`.
+Developed with AI assistance (Claude). Full audit log in Section 5 of `docs/MDRIIA_Group_10_Technical_Dossier.docx`.
 
 ## Showcase
 
