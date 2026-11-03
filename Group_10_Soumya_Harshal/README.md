@@ -242,7 +242,17 @@ docs/figs/   result figures
 
 ## AI assistance
 
-Developed with AI assistance (Claude). Full audit log in Section 5 of `docs/MDRIIA_Group_10_Technical_Dossier.docx`.
+## AI-assisted development and verification
+
+**Tooling.** Claude (Anthropic) was used as a coding and analysis assistant, off the shelf: no custom model training or fine-tuning. The learned tremor filter is a separate, from-scratch PPO policy that we trained ourselves in NumPy.
+
+**Human-in-the-loop protocol.**
+- **Run, don't trust:** every script is executed locally; results come from logged CSVs with fixed seeds (hand seeds 1000–1029), never from model output.
+- **Claims audited against primary sources:** AI-generated statements were checked and corrected. Caught errors include a wrong journal on a citation, an overstated headline gain (about 38–40% quoted where the end-to-end figure is about 17%), and a filter-stage-only figure (about 60%) presented as end-to-end.
+- **Provenance for every parameter:** each input is tagged cited, derived or assumed (`docs/PARAMETER_PROVENANCE.md`).
+- **Decision rules set before the experiment, negative results kept:** the tracking-aware retrain missed its adoption rule and is reported as an ablation, not adopted.
+
+Full audit log: Section 5 of `docs/MDRIIA_Group_10_Technical_Dossier.docx`.
 
 ## Showcase
 
