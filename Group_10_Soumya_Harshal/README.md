@@ -240,20 +240,14 @@ docs/figs/   result figures
 
 ---
 
-## AI assistance
+## Verification and reproducibility
 
-## AI-assisted development and verification
-
-**Tooling.** Claude (Anthropic) was used as a coding and analysis assistant, off the shelf: no custom model training or fine-tuning. The learned tremor filter is a separate, from-scratch PPO policy that we trained ourselves in NumPy.
-
-**Human-in-the-loop protocol.**
-- **Run, don't trust:** every script is executed locally; results come from logged CSVs with fixed seeds (hand seeds 1000–1029), never from model output.
-- **Claims audited against primary sources:** AI-generated statements were checked and corrected. Caught errors include a wrong journal on a citation, an overstated headline gain (about 38–40% quoted where the end-to-end figure is about 17%), and a filter-stage-only figure (about 60%) presented as end-to-end.
-- **Provenance for every parameter:** each input is tagged cited, derived or assumed (`docs/PARAMETER_PROVENANCE.md`).
-- **Decision rules set before the experiment, negative results kept:** the tracking-aware retrain missed its adoption rule and is reported as an ablation, not adopted.
-
-Full audit log: Section 5 of `docs/MDRIIA_Group_10_Technical_Dossier.docx`.
-
+- **Seeded, regenerable evidence:** 4 tremor tiers × 30 hands (hand seeds 1000–1029); every table and figure is regenerated from logged CSVs in `analytics/`.
+- **Paired statistics:** paired t-tests, Cohen's d and 95% confidence intervals; 10 independently trained learned policies reported, including the worst seed.
+- **Parameter provenance:** every input tagged cited, derived or assumed (`docs/PARAMETER_PROVENANCE.md`).
+- **Fixed decision rule:** the tracking-aware retrain was held to an adoption threshold (tracking ≤ 0.052 mm and hold ≤ 0.038 mm). It missed, so it is reported as an ablation, not adopted.
+- **Independent checks:** a singularity test (`src/singularity_test.py`) and a sensor-delay sweep (`src/sensor_sweep.py`).
+- **Baseline audit:** tuning the unassisted controller changed the conclusion, so the tuned numbers are the reference.
 ## Showcase
 
 LinkedIn post: *add URL here*
